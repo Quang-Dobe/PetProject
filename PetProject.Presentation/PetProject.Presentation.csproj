@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PetProject.Application\PetProject.Application.csproj" />
+    <ProjectReference Include="..\PetProject.CrossCuttingConcerns\PetProject.CrossCuttingConcerns.csproj" />
+    <ProjectReference Include="..\PetProject.Domain\PetProject.Domain.csproj" />
+    <ProjectReference Include="..\PetProject.Infrastructure\PetProject.Infrastructure.csproj" />
+    <ProjectReference Include="..\PetProject.Persistence\PetProject.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
