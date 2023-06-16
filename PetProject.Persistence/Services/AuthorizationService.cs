@@ -28,6 +28,8 @@ namespace PetProject.IdentityServer.Persistence.Services
 
         private readonly IRefreshTokenRepository _refreshTokenRepository;
 
+        private readonly IUserRepository _userRepository;
+
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         private readonly IDateTimeProvider _dateTimeProvider;
@@ -44,6 +46,7 @@ namespace PetProject.IdentityServer.Persistence.Services
             AppSettings appSettings,
             IClientApplicationRepository clientApplicationRepository,
             IRefreshTokenRepository refreshTokenRepository,
+            IUserRepository userRepository,
             IHttpContextAccessor httpContextAccessor,
             IDateTimeProvider dateTimeProvider, 
             ILogger<AuthorizationService> logger)
@@ -52,6 +55,7 @@ namespace PetProject.IdentityServer.Persistence.Services
             _appSettings = appSettings;
             _clientApplicationRepository = clientApplicationRepository;
             _refreshTokenRepository = refreshTokenRepository;
+            _userRepository = userRepository;
             _httpContextAccessor = httpContextAccessor;
             _dateTimeProvider = dateTimeProvider;
             _logger = logger;
@@ -73,7 +77,7 @@ namespace PetProject.IdentityServer.Persistence.Services
 
             if (clientId.IsNullOrEmpty() || clientSecret.IsNullOrEmpty())
             {
-                LogTrace(request.UserName, "", ipAddress, "Invalid ClientID / ClientSecret");
+                LogTrace(request.UserName, clientId, ipAddress, "Invalid ClientID / ClientSecret");
                 throw new UnauthorizedAccessException("Invalid ClientID / ClientSecret");
             }
 
@@ -104,7 +108,7 @@ namespace PetProject.IdentityServer.Persistence.Services
                 {
                     AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                     ExpireIn = (int)_appSettings.Auth.AccessTokenLifetime.ClientCredentials,
-                    TokenType = "Bearer ",
+                    TokenType = "Bearer",
                     RefreshToken = refreshToken,
                     Credential = new ClientCredentialDto()
                 };
@@ -180,7 +184,7 @@ namespace PetProject.IdentityServer.Persistence.Services
                         {
                             AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                             ExpireIn = (int)_appSettings.Auth.AccessTokenLifetime.ResourceOwnerCredentials,
-                            TokenType = "Bearer ",
+                            TokenType = "Bearer",
                             RefreshToken = refreshToken,
                             Credential = new ResourceOwnerPasswordCredentialDto
                             {
@@ -230,30 +234,8 @@ namespace PetProject.IdentityServer.Persistence.Services
 
             if (refreshToken == null)
             {
-                if (!request.UserName.IsNullOrEmpty() && !request.Password.IsNullOrEmpty())
-                {
-                    var result = await GrantResourceOwnerPasswordCredentialAsync(request);
-                    return new CredentialResultDto<object>
-                    {
-                        AccessToken = result.AccessToken,
-                        ExpireIn = result.ExpireIn,
-                        TokenType = result.TokenType,
-                        RefreshToken = result.RefreshToken,
-                        Credential = result.Credential
-                    };
-                }
-                if (!request.ClientId.IsNullOrEmpty() && !request.ClientSecret.IsNullOrEmpty())
-                {
-                    var result = await GrantClientCredentialAsync(request);
-                    return new CredentialResultDto<object>
-                    {
-                        AccessToken = result.AccessToken,
-                        ExpireIn = result.ExpireIn,
-                        TokenType = result.TokenType,
-                        RefreshToken = result.RefreshToken,
-                        Credential = result.Credential
-                    };
-                }
+                LogTrace(request.UserName, request.ClientId, ipAddress, "Not Exist RefreshToken");
+                throw new HttpRequestException("Not Exist RefreshToken");
             }
             else if (refreshToken.ConsumedTime != null)
             {
@@ -304,12 +286,98 @@ namespace PetProject.IdentityServer.Persistence.Services
 
         public async Task<CredentialResultDto<ClientCredentialDto>> RefreshTokenForClientCredentialAsync(LoginDto request, RefreshToken refreshToken)
         {
-            throw new NotImplementedException();
+            var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+
+            try
+            {
+                var clientId = refreshToken.ClientId;
+                var issueAt = _dateTimeProvider.Now;
+                var permClaims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, clientId),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, issueAt.ToString()),
+                new Claim("urn:oauth:scope", string.Empty),
+                new Claim("client_id", clientId)
+            };
+
+                var expires = _dateTimeProvider.Now.AddMinutes(_appSettings.Auth.RefreshTokenLifetime.ClientCredentials);
+                var token = GenerateToken(permClaims, expires, _securityAlgorithm);
+                var client = _clientApplicationRepository.GetAll().Where(x => x.Id == Guid.Parse(clientId)).FirstOrDefault();
+                var refreshTokenHead = GenerateRefreshToken();
+                var refreshTokenTail = GenerateRefreshToken();
+                var new_RefreshToken = string.Format("{0}.{1}", refreshTokenHead, refreshTokenTail);
+
+                lock (_Lock)
+                {
+                    _refreshTokenRepository.Add(new_RefreshToken, _securityAlgorithm, null, client);
+                }
+
+                return new CredentialResultDto<ClientCredentialDto>()
+                {
+                    AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                    ExpireIn = (int)_appSettings.Auth.AccessTokenLifetime.ClientCredentials,
+                    TokenType = "Bearer",
+                    RefreshToken = new_RefreshToken,
+                    Credential = new ClientCredentialDto()
+                };
+            }
+            catch
+            {
+                LogTrace(request.UserName, refreshToken.ClientId, ipAddress, "Invalid ClientID or Something else!");
+                throw new UnauthorizedAccessException("There is something wrong");
+            }
         }
 
         public async Task<CredentialResultDto<ResourceOwnerPasswordCredentialDto>> RefreshTokenForResourceOwnerCredentialAsync(LoginDto request, RefreshToken refreshToken)
         {
-            throw new NotImplementedException();
+            var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+
+            try
+            {
+                var userId = refreshToken.UserId;
+                var issueAt = _dateTimeProvider.Now;
+                var permClaims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, userId),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, issueAt.ToString()),
+                new Claim("urn:oauth:scope", string.Empty),
+                new Claim("user_id", userId)
+            };
+
+                var expires = _dateTimeProvider.Now.AddMinutes(_appSettings.Auth.RefreshTokenLifetime.ClientCredentials);
+                var token = GenerateToken(permClaims, expires, _securityAlgorithm);
+                var user = _userRepository.GetAll().Where(x => x.Id == Guid.Parse(userId)).FirstOrDefault();
+                var refreshTokenHead = GenerateRefreshToken();
+                var refreshTokenTail = GenerateRefreshToken();
+                var new_RefreshToken = string.Format("{0}.{1}", refreshTokenHead, refreshTokenTail);
+
+                lock (_Lock)
+                {
+                    _refreshTokenRepository.Add(new_RefreshToken, _securityAlgorithm, user, null);
+                }
+
+                return new CredentialResultDto<ResourceOwnerPasswordCredentialDto>()
+                {
+                    AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                    ExpireIn = (int)_appSettings.Auth.AccessTokenLifetime.ClientCredentials,
+                    TokenType = "Bearer",
+                    RefreshToken = new_RefreshToken,
+                    Credential = new ResourceOwnerPasswordCredentialDto()
+                    {
+                        UserName = user.UserName,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        UserType = IdentityServer.Enums.UserType.External
+                    }
+                };
+            }
+            catch
+            {
+                LogTrace(request.UserName, refreshToken.ClientId, ipAddress, "Invalid UserID or Something else!");
+                throw new UnauthorizedAccessException("There is something wrong");
+            }
         }
 
         #region Private methods
