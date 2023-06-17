@@ -10,5 +10,7 @@
 
             public const string ClientCredential = "client_credential";
         }
+
+        public static int AccountLockoutTimeSpan = 5;
     }
 }

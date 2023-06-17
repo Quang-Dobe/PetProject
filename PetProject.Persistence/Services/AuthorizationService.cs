@@ -128,6 +128,12 @@ namespace PetProject.IdentityServer.Persistence.Services
 
             if (user != null)
             {
+                if (await _userManager.IsLockedOutAsync(user))
+                {
+                    LogTrace(request.UserName, request.ClientId, "", "User is locked out");
+                    throw new UnauthorizedAccessException("User has exceeded login attempts and account is locked out");
+                }
+
                 var result = await _userManager.CheckPasswordAsync(user, request.Password);
 
                 if (result)
@@ -135,12 +141,7 @@ namespace PetProject.IdentityServer.Persistence.Services
                     var userId = await _userManager.GetUserIdAsync(user);
                     _logger.LogInformation("Credentials validated for user {}", user.UserName);
 
-                    if (user.LockoutEnable)
-                    {
-                        LogTrace(request.UserName, request.ClientId, "", "User is locked out");
-                        throw new UnauthorizedAccessException("User has exceeded login attempts and account is locked out");
-                    }
-                    else if (!user.Status)
+                    if (!user.Status)
                     {
                         LogTrace(request.UserName, request.ClientId, "", "User is inactive");
                         throw new UnauthorizedAccessException("User is not active for login");
@@ -208,6 +209,7 @@ namespace PetProject.IdentityServer.Persistence.Services
                         await _userManager.SetLockoutEnabledAsync(user, true);
                     }
 
+                    // IsLockedOut => Set LockedEndDate + 5 minutes && ResetAccessFailedCount = 0 (But still lockedOut)
                     await _userManager.AccessFailedAsync(user);
                     _logger.LogInformation(string.Format("User {0} login failed!", user.UserName));
 
@@ -358,6 +360,8 @@ namespace PetProject.IdentityServer.Persistence.Services
                     _refreshTokenRepository.Add(new_RefreshToken, _securityAlgorithm, user, null);
                 }
 
+                await _userManager.ResetAccessFailedCountAsync(user);
+                await _userManager.SetLockoutEnabledAsync(user, false);
                 return new CredentialResultDto<ResourceOwnerPasswordCredentialDto>()
                 {
                     AccessToken = new JwtSecurityTokenHandler().WriteToken(token),

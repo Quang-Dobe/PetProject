@@ -2,6 +2,7 @@ using Microsoft.Extensions.Options;
 using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
 using PetProject.IdentityServer.Persistence.Extensions;
 using PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting;
+using PetProject.IdentityServer.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -16,6 +17,7 @@ builder.Services.Configure<AppSettings>(configuration)
     .AddSingleton(sp => sp.GetRequiredService<IOptions<AppSettings>>().Value);
 builder.Services.AddCrossCuttingConcerns();
 builder.Services.AddPersistence("", "");
+builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 

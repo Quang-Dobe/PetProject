@@ -2,7 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
+using PetProject.IdentityServer.CrossCuttingConcerns.HtmlGenerator;
 using PetProject.IdentityServer.CrossCuttingConcerns.OS;
+using PetProject.IdentityServer.Domain.Constants;
+using PetProject.IdentityServer.Domain.DTOs;
 using PetProject.IdentityServer.Domain.Entities;
 using PetProject.IdentityServer.Domain.Repositories;
 
@@ -23,6 +26,8 @@ namespace PetProject.IdentityServer.Persistence.MyIdentity
 
         private readonly IdentityDbContext _context;
 
+        private readonly IHtmlGenerator _htmlGenerator;
+
         private readonly IUserRepository _userRepository;
 
         private readonly IEmailRepository _emailRepository;
@@ -39,6 +44,7 @@ namespace PetProject.IdentityServer.Persistence.MyIdentity
 
         public UserStore(IUnitOfWork uow,
             IdentityDbContext context,
+            IHtmlGenerator htmlGenerator,
             IUserRepository userRepository,
             IEmailRepository emailRepository,
             IConfiguration configuration,
@@ -46,6 +52,7 @@ namespace PetProject.IdentityServer.Persistence.MyIdentity
         {
             _uow = uow;
             _context = context;
+            _htmlGenerator = htmlGenerator;
             _userRepository = userRepository;
             _emailRepository = emailRepository;
             _configuration = configuration;
@@ -302,14 +309,19 @@ namespace PetProject.IdentityServer.Persistence.MyIdentity
 
             try
             {
-                var template = Path.Combine(Environment.CurrentDirectory, $"Templates\\EmailAccountLockout.cshtml");
+                var path = Path.Combine(Environment.CurrentDirectory, $"Templates\\EmailAccountLockout.cshtml");
+                var model = new EmailAccountLockoutModel()
+                {
+                    ToUser = toName,
+                    AccountLockoutTimeSpan = Constants.AccountLockoutTimeSpan,
+                };
 
-                if (template == null)
+                if (path == null)
                 {
                     return;
                 }
 
-                email.Body = "";
+                email.Body = await _htmlGenerator.GenerateHtmlAsync(path, model);
                 email.Subject = title;
 
                 await _emailRepository.AddAsync(email);
