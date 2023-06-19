@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
@@ -42,13 +43,13 @@ namespace PetProject.IdentityServer.Persistence.Extensions
                 }
             }));
 
-            //services.AddIdentityCore<User>();
+            services.AddIdentityCore<User>();
             services.AddTransient<IUserStore<User>, UserStore>();
             services.AddTransient<MyUserManager, MyUserManager>();
-            //services.Configure<PasswordHasherOptions>(option =>
-            //{
-            //    option.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2;
-            //});
+            services.Configure<PasswordHasherOptions>(option =>
+            {
+                option.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2;
+            });
 
             return services;
         }
@@ -72,6 +73,7 @@ namespace PetProject.IdentityServer.Persistence.Extensions
 
         public static IServiceCollection AddServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             foreach (var exportedType in Assembly.GetExecutingAssembly().GetExportedTypes())
             {
                 if (exportedType.IsClass && !exportedType.IsAbstract)
