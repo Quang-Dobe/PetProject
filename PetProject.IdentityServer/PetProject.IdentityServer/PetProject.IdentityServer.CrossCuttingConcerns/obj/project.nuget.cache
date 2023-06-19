@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "eJEjQ6nj5SZSUpN6ZzFIltFXrJkO4wRIiPu9y4n/d5MO20vnzktFfDGot6wIGUzbZzymEde6BLVNOI1p1g3/Vw==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\PetProject\\PetProject.IdentityServer\\PetProject.IdentityServer\\PetProject.IdentityServer.CrossCuttingConcerns\\PetProject.IdentityServer.CrossCuttingConcerns.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "psFRVkjYBR0yGZQJxFG4k/KAhpDTL833iQ/8E67vdgo=",
+  "Source": "PetProject.IdentityServer.Presentation",
+  "BasePath": "_content/PetProject.IdentityServer.Presentation",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

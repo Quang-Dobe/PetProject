@@ -1,0 +1,17 @@
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\obj\Debug\net7.0\PetProject.IdentityServer.Infrastructure.csproj.AssemblyReference.cache
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\obj\Debug\net7.0\PetProject.IdentityServer.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\obj\Debug\net7.0\PetProject.IdentityServer.Infrastructure.AssemblyInfoInputs.cache
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\obj\Debug\net7.0\PetProject.IdentityServer.Infrastructure.AssemblyInfo.cs
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\obj\Debug\net7.0\PetProject.IdentityServer.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\bin\Debug\net7.0\PetProject.IdentityServer.Infrastructure.deps.json
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\bin\Debug\net7.0\PetProject.IdentityServer.Infrastructure.dll
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\bin\Debug\net7.0\PetProject.IdentityServer.Infrastructure.pdb
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\bin\Debug\net7.0\PetProject.IdentityServer.CrossCuttingConcerns.dll
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\bin\Debug\net7.0\PetProject.IdentityServer.Domain.dll
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\bin\Debug\net7.0\PetProject.IdentityServer.CrossCuttingConcerns.pdb
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\bin\Debug\net7.0\PetProject.IdentityServer.Domain.pdb
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\obj\Debug\net7.0\PetProject.IdentityServer.Infrastructure.csproj.CopyComplete
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\obj\Debug\net7.0\PetProject.IdentityServer.Infrastructure.dll
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\obj\Debug\net7.0\refint\PetProject.IdentityServer.Infrastructure.dll
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\obj\Debug\net7.0\PetProject.IdentityServer.Infrastructure.pdb
+C:\Projects\PetProject\PetProject.IdentityServer\PetProject.IdentityServer\PetProject.IdentityServer.Infrastructure\obj\Debug\net7.0\ref\PetProject.IdentityServer.Infrastructure.dll

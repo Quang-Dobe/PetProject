@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\PetProject.IdentityServer.Presentation.props" />
+</Project>
