@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "5yV2elq8TrhDHqWAHM1QxZ2Ubr+lqWDyv1sbr9y5/OSPLBdq/5VWR167ba/JqZDFukOiZWlgENmtl6iFUeAoQA==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\PetProject\\PetProject.IdentityServer\\PetProject.IdentityServer.Domain\\PetProject.IdentityServer.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
