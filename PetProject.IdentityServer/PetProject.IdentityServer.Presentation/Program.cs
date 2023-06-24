@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
-using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
-using PetProject.IdentityServer.Persistence.Extensions;
 using PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting;
+using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
 using PetProject.IdentityServer.Infrastructure.Extensions;
+using PetProject.IdentityServer.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PetProject.OrderManagement.Domain\PetProject.OrderManagement.Domain.csproj" />
+    <ProjectReference Include="..\PetProject.OrderManagement.Infrastructure\PetProject.OrderManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\PetProject.OrderManagement.Persistence\PetProject.OrderManagement.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

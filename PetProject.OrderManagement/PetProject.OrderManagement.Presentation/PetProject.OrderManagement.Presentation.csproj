@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PetProject.OrderManagement.Application\PetProject.OrderManagement.Application.csproj" />
+    <ProjectReference Include="..\PetProject.OrderManagement.CrossCuttingConcerns\PetProject.OrderManagement.CrossCuttingConcerns.csproj" />
+    <ProjectReference Include="..\PetProject.OrderManagement.Domain\PetProject.OrderManagement.Domain.csproj" />
+    <ProjectReference Include="..\PetProject.OrderManagement.Infrastructure\PetProject.OrderManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\PetProject.OrderManagement.Persistence\PetProject.OrderManagement.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

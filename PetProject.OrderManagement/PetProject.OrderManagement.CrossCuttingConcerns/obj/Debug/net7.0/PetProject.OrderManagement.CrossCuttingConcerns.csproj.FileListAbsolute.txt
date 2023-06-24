@@ -1,0 +1,12 @@
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\bin\Debug\net7.0\PetProject.OrderManagement.CrossCuttingConcerns.deps.json
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\bin\Debug\net7.0\PetProject.OrderManagement.CrossCuttingConcerns.dll
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\bin\Debug\net7.0\PetProject.OrderManagement.CrossCuttingConcerns.pdb
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\obj\Debug\net7.0\PetProject.OrderManagement.CrossCuttingConcerns.csproj.AssemblyReference.cache
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\obj\Debug\net7.0\PetProject.OrderManagement.CrossCuttingConcerns.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\obj\Debug\net7.0\PetProject.OrderManagement.CrossCuttingConcerns.AssemblyInfoInputs.cache
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\obj\Debug\net7.0\PetProject.OrderManagement.CrossCuttingConcerns.AssemblyInfo.cs
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\obj\Debug\net7.0\PetProject.OrderManagement.CrossCuttingConcerns.csproj.CoreCompileInputs.cache
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\obj\Debug\net7.0\PetProject.OrderManagement.CrossCuttingConcerns.dll
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\obj\Debug\net7.0\refint\PetProject.OrderManagement.CrossCuttingConcerns.dll
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\obj\Debug\net7.0\PetProject.OrderManagement.CrossCuttingConcerns.pdb
+C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.CrossCuttingConcerns\obj\Debug\net7.0\ref\PetProject.OrderManagement.CrossCuttingConcerns.dll
