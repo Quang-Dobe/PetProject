@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Text;
 
-namespace PetProject.Persistence.Extensions
+namespace PetProject.IdentityServer.Persistence.Extensions
 {
     public static class HttpRequestExtension
     {

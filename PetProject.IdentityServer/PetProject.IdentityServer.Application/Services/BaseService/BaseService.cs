@@ -1,6 +1,6 @@
 ﻿using PetProject.IdentityServer.Domain.Services;
 
-namespace PetProject.IdentityServer.Persistence.Services
+namespace PetProject.IdentityServer.Application.Services
 {
     public class BaseService : IBaseService
     {

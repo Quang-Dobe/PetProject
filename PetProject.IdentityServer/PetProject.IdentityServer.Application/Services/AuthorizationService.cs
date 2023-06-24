@@ -1,22 +1,22 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Diagnostics;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
 using PetProject.IdentityServer.CrossCuttingConcerns.OS;
 using PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting;
-using PetProject.IdentityServer.Domain.DTOs;
-using PetProject.IdentityServer.Domain.DTOs.Credential;
-using PetProject.IdentityServer.Domain.Entities;
-using PetProject.IdentityServer.Domain.Repositories;
-using PetProject.IdentityServer.Domain.Services;
 using PetProject.IdentityServer.Persistence.MyIdentity.MyManager;
-using PetProject.Persistence.Extensions;
-using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
+using PetProject.IdentityServer.Persistence.Extensions;
+using PetProject.IdentityServer.Domain.DTOs.Credential;
+using PetProject.IdentityServer.Domain.DTOs;
+using PetProject.IdentityServer.Domain.Repositories;
+using PetProject.IdentityServer.Domain.Entities;
+using PetProject.IdentityServer.Domain.Services;
 
-namespace PetProject.IdentityServer.Persistence.Services
+namespace PetProject.IdentityServer.Application.Services
 {
     public class AuthorizationService : BaseService, IAuthorizationService
     {

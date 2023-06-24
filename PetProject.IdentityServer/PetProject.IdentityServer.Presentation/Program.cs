@@ -3,6 +3,7 @@ using PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting;
 using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
 using PetProject.IdentityServer.Infrastructure.Extensions;
 using PetProject.IdentityServer.Persistence.Extensions;
+using PetProject.IdentityServer.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -18,6 +19,7 @@ builder.Services.Configure<AppSettings>(configuration)
 builder.Services.AddCrossCuttingConcerns();
 builder.Services.AddPersistence(configuration.GetConnectionString("Identity"), "");
 builder.Services.AddInfrastructure();
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
