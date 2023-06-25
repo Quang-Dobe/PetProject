@@ -1229,6 +1229,8 @@
       },
       "PetProject.OrderManagement.Infrastructure/1.0.0": {
         "dependencies": {
+          "Microsoft.Data.SqlClient": "5.0.2",
+          "Microsoft.EntityFrameworkCore": "7.0.8",
           "Microsoft.Extensions.DependencyInjection": "7.0.0",
           "PetProject.OrderManagement.CrossCuttingConcerns": "1.0.0",
           "PetProject.OrderManagement.Domain": "1.0.0"
