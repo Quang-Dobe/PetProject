@@ -8,23 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\quang.tranduy1\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj",
+      "projectUniqueName": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj",
       "projectName": "PetProject.OrderManagement.Domain",
-      "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj",
-      "packagesPath": "C:\\Users\\quang.tranduy1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\obj\\",
+      "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj",
+      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+      "outputPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\quang.tranduy1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -65,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400-preview.23225.8\\RuntimeIdentifierGraph.json"
       }
     }
   }

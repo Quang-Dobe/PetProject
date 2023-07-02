@@ -1,8 +1,8 @@
-﻿using System.Data;
-using System.Text;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using PetProject.OrderManagement.CrossCuttingConcerns.Extensions;
 using PetProject.OrderManagement.Infrastructure.SqlServer.Extensions;
+using System.Data;
+using System.Text;
 
 namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
 {
@@ -125,7 +125,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
                 createTempTableCommand.ExecuteNonQuery();
             }
 
-            GenerateDataForTempTable(dataTable, tempTableName, _dbColumnMappings, _connection, _transaction, _options);
+            GenerateDataForTempTable(dataTable, tempTableName, _dbColumnMappings, _connection, _transaction);
             
             using (var updateExistedTableCommand = _connection.CreateTextCommand(_transaction, sqlQueryUpdatingExitsedTable))
             {

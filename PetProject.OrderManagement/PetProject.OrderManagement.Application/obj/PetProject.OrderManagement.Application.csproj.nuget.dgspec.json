@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj": {}
+    "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj": {
+    "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj",
+        "projectUniqueName": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj",
         "projectName": "PetProject.OrderManagement.Application",
-        "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj",
-        "packagesPath": "C:\\Users\\quang.tranduy1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\obj\\",
+        "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\quang.tranduy1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -31,14 +28,14 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj": {
-                "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj"
+              "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj": {
+                "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj"
               },
-              "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj"
+              "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj": {
+                "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj"
               },
-              "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj": {
-                "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj"
+              "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj": {
+                "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj"
               }
             }
           }
@@ -68,24 +65,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400-preview.23225.8\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj": {
+    "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj",
+        "projectUniqueName": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj",
         "projectName": "PetProject.OrderManagement.CrossCuttingConcerns",
-        "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj",
-        "packagesPath": "C:\\Users\\quang.tranduy1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\obj\\",
+        "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\quang.tranduy1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -132,24 +126,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400-preview.23225.8\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj": {
+    "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj",
+        "projectUniqueName": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj",
         "projectName": "PetProject.OrderManagement.Domain",
-        "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj",
-        "packagesPath": "C:\\Users\\quang.tranduy1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\obj\\",
+        "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\quang.tranduy1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -190,24 +181,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400-preview.23225.8\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj": {
+    "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj",
         "projectName": "PetProject.OrderManagement.Infrastructure",
-        "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\quang.tranduy1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\obj\\",
+        "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\quang.tranduy1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -221,11 +209,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj": {
-                "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj"
+              "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj": {
+                "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj"
               },
-              "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj": {
-                "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj"
+              "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj": {
+                "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj"
               }
             }
           }
@@ -269,24 +257,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400-preview.23225.8\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj": {
+    "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj",
+        "projectUniqueName": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj",
         "projectName": "PetProject.OrderManagement.Persistence",
-        "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj",
-        "packagesPath": "C:\\Users\\quang.tranduy1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\obj\\",
+        "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\quang.tranduy1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -300,11 +285,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj": {
-                "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj"
+              "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj": {
+                "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj"
               },
-              "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj": {
-                "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj"
+              "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj": {
+                "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj"
               }
             }
           }
@@ -360,7 +345,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400-preview.23225.8\\RuntimeIdentifierGraph.json"
         }
       }
     }

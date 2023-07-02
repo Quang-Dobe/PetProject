@@ -3293,6 +3293,7 @@
       "path": "microsoft.netcore.targets/1.1.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -3572,6 +3573,7 @@
       "path": "system.globalization/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -3660,6 +3662,7 @@
       "path": "system.io/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -3850,6 +3853,7 @@
       "path": "system.reflection/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -3951,6 +3955,7 @@
       "path": "system.reflection.primitives/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -4007,6 +4012,7 @@
       "path": "system.resources.resourcemanager/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -4063,6 +4069,7 @@
       "path": "system.runtime/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -4477,6 +4484,7 @@
       "path": "system.text.encoding/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -4631,6 +4639,7 @@
       "path": "system.threading.tasks/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -4780,23 +4789,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\quang.tranduy1\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj",
+      "projectUniqueName": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj",
       "projectName": "PetProject.OrderManagement.Application",
-      "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj",
-      "packagesPath": "C:\\Users\\quang.tranduy1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\obj\\",
+      "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\PetProject.OrderManagement.Application.csproj",
+      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+      "outputPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Application\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\quang.tranduy1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4810,14 +4815,14 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj": {
-              "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj"
+            "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj": {
+              "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj"
             },
-            "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj"
+            "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj": {
+              "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Infrastructure\\PetProject.OrderManagement.Infrastructure.csproj"
             },
-            "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj": {
-              "projectPath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj"
+            "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj": {
+              "projectPath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Persistence\\PetProject.OrderManagement.Persistence.csproj"
             }
           }
         }
@@ -4847,7 +4852,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400-preview.23225.8\\RuntimeIdentifierGraph.json"
       }
     }
   }
