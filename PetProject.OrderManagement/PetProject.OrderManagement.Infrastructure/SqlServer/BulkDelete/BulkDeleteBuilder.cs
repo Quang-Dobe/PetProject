@@ -1,12 +1,12 @@
-﻿using System.Data;
+using System.Data;
 using System.Text;
 using Microsoft.Data.SqlClient;
 using PetProject.OrderManagement.CrossCuttingConcerns.Extensions;
 using PetProject.OrderManagement.Infrastructure.SqlServer.Extensions;
 
-namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
+namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkDelete
 {
-    public class BulkUpdateBuilder<T>
+    public class BulkDeleteBuilder<T>
     {
         private IEnumerable<T> _data;
 
@@ -22,24 +22,23 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
 
         private string _tableNamePrefix;
 
-        private readonly SqlConnection _connection;
+        private SqlConnection _connection;
 
-        private readonly SqlTransaction _transaction;
+        private SqlTransaction _transaction;
 
         #region Constructor
 
-        public BulkUpdateBuilder(SqlConnection connection)
+        public BulkDeleteBuilder(SqlConnection connection)
         {
             _connection = connection;
         }
 
-        public BulkUpdateBuilder(SqlTransaction transaction)
+        public BulkDeleteBuilder(SqlTransaction transaction)
         {
             _transaction = transaction;
-            _connection = transaction.Connection;
         }
 
-        public BulkUpdateBuilder(SqlConnection connection, SqlTransaction transaction = null)
+        public BulkDeleteBuilder(SqlConnection connection, SqlTransaction transaction = null)
         {
             _connection = connection;
             _transaction = transaction;
@@ -47,51 +46,52 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
 
         #endregion
 
-        public BulkUpdateBuilder<T> WithData(IEnumerable<T> data)
+        public BulkDeleteBuilder<T> WithData(IEnumerable<T> data)
         {
             _data = data;
 
             return this;
         }
 
-        public BulkUpdateBuilder<T> WithIdColumns(IEnumerable<string> idColumns)
+        public BulkDeleteBuilder<T> WithIdColumns(IEnumerable<string> idColumns)
         {
             _idColumns = idColumns;
 
             return this;
         }
 
-        public BulkUpdateBuilder<T> WithColumnNames(IEnumerable<string> columnNames)
+        public BulkDeleteBuilder<T> WithColumnNames(IEnumerable<string> columnNames)
         {
             _columnNames = columnNames;
 
             return this;
         }
 
-        public BulkUpdateBuilder<T> WithDbColumnMappings(IDictionary<string, string> columnMappings)
+        public BulkDeleteBuilder<T> WithDbColumnMappings(IDictionary<string, string> dbColumnMappings)
         {
-            _dbColumnMappings = columnMappings;
+            _dbColumnMappings = dbColumnMappings;
 
             return this;
         }
 
-        public BulkUpdateBuilder<T> WithTable(string tableName)
+        public BulkDeleteBuilder<T> WithTable(string tableName)
         {
             _tableName = tableName;
 
             return this;
         }
 
-        public BulkUpdateBuilder<T> WithTablePrefix(string tableNamePrefix = "dbo")
+        public BulkDeleteBuilder<T> WithTablePrefix(string tableNamePrefix = "dbo")
         {
             _tableNamePrefix = tableNamePrefix;
 
             return this;
         }
 
-        public BulkUpdateBuilder<T> WithConfigureBulkOptions(Action<BulkOptions> action)
+        public BulkDeleteBuilder<T> WithConfigureBulkOptions(Action<BulkOptions> action)
         {
             _options = new BulkOptions();
+
             if (action != null)
             {
                 action(_options);
@@ -105,66 +105,51 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
             var tempTableName = "#" + Guid.NewGuid();
 
             var dataTableColumns = new List<string>();
-            dataTableColumns.AddRange(_columnNames.ToList());
-            dataTableColumns.AddRange(_idColumns.ToList());
+            dataTableColumns.AddRange(_idColumns);
+            dataTableColumns.AddRange(_columnNames);
 
-            var dataTable = _data.ToDataTable(dataTableColumns.ToArray());
+            var dataTable = _data.ToDataTable(dataTableColumns);
             var sqlQueryCreatingTempTable = dataTable.ToSqlQueryCreatingTable(tempTableName);
-            var sqlQueryUpdatingExitsedTable = GenerateSqlQueryUpdatingExistedTable(tempTableName);
-
-            // WorkFlow:
-            // + Open connection to database and Keep connection
-            // + Create TempTable
-            // + Insert data to TempTable
-            // + Update ExistedTable
+            var sqlQueryDeletingDataFromTable = GenerateSqlQueryDeletingDataFromTable(tempTableName);
 
             _connection.EnsureOpen();
-            
+
             using (var createTempTableCommand = _connection.CreateTextCommand(_transaction, sqlQueryCreatingTempTable))
             {
                 createTempTableCommand.ExecuteNonQuery();
             }
 
             GenerateDataForTempTable(dataTable, tempTableName, _dbColumnMappings, _connection, _transaction, _options);
-            
-            using (var updateExistedTableCommand = _connection.CreateTextCommand(_transaction, sqlQueryUpdatingExitsedTable))
+
+            using (var deleteDataFromTable = _connection.CreateTextCommand(_transaction, sqlQueryDeletingDataFromTable))
             {
-                updateExistedTableCommand.ExecuteNonQuery();
+                deleteDataFromTable.ExecuteNonQuery();
             }
         }
 
         #region Private methods
 
-        private string GenerateSqlQueryUpdatingExistedTable(string tempTableName)
+        private string GenerateSqlQueryDeletingDataFromTable(string tempTableName)
         {
             var sqlQuery = new StringBuilder();
 
             // Generate join conditions
-            var joinCondition = string.Join(" and ", _idColumns.Select(x =>
-            {
-                var columnName = GetDbColumnName(x);
-
-                return $"a.[{columnName}] = b.[{x}]";
-            }));
-
-            // Generate set statements
-            var setStatement = string.Join(", ", _columnNames.Select(x =>
+            var joinCondition = string.Join(" and ", _idColumns.Select(x => 
             {
                 var columnName = GetDbColumnName(x);
 
                 return $"a.[{columnName}] = b.[{columnName}]";
             }));
 
-            sqlQuery.AppendLine("UPDATE a");
-            sqlQuery.AppendLine($"SET {setStatement}");
-            sqlQuery.AppendLine($"FROM {_tableName} a JOIN [{tempTableName}] b ON " + joinCondition);
+            sqlQuery.AppendLine("DELETE a");
+            sqlQuery.AppendLine($"FROM [{_tableNamePrefix}][{_tableName}] a JOIN {tempTableName} b ON " + joinCondition);
 
             return sqlQuery.ToString();
         }
 
-        private string GetDbColumnName(string columnName)
+        private string GetDbColumnName(string idColumn)
         {
-            return _dbColumnMappings == null ? columnName : _dbColumnMappings[columnName];
+            return _dbColumnMappings.ContainsKey(idColumn) ? _dbColumnMappings[idColumn] : idColumn;
         }
 
         private void GenerateDataForTempTable(DataTable dataTable,
@@ -172,12 +157,12 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
             IDictionary<string, string> dbColumnMappings,
             SqlConnection connection,
             SqlTransaction transaction,
-            BulkOptions options = null)
+            BulkOptions options)
         {
             options ??= new BulkOptions()
             {
-                BatchSize = 0,
-                TimeOut = 30,
+                BatchSize = _options.BatchSize,
+                TimeOut = _options.TimeOut
             };
 
             var bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction)
@@ -203,5 +188,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
         }
 
         #endregion
+
+
     }
 }
