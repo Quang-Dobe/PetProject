@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RWkv6nLxx+bAoU498MNLqqWqmTwKIIUPowct1groUMxhqErNlQRdR7kax1ijGCkTXhLVmQ5MmBkQ0De4qx/a2A==",
+  "dgSpecHash": "6VwM6mghRwOkYuPg1e8Z8MssFIpNVjZtzeskkzpnvsIzixYkBnvMPzjGIE0IPK9Mf0y7m4WPurzVkJsrAhn2BQ==",
   "success": true,
-  "projectFilePath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj",
+  "projectFilePath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.Domain\\PetProject.OrderManagement.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
