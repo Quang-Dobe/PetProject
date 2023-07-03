@@ -10,3 +10,15 @@ C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Dom
 C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\refint\PetProject.OrderManagement.Domain.dll
 C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\PetProject.OrderManagement.Domain.pdb
 C:\Projects\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\ref\PetProject.OrderManagement.Domain.dll
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\bin\Debug\net7.0\PetProject.OrderManagement.Domain.deps.json
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\bin\Debug\net7.0\PetProject.OrderManagement.Domain.dll
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\bin\Debug\net7.0\PetProject.OrderManagement.Domain.pdb
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\PetProject.OrderManagement.Domain.csproj.AssemblyReference.cache
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\PetProject.OrderManagement.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\PetProject.OrderManagement.Domain.AssemblyInfoInputs.cache
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\PetProject.OrderManagement.Domain.AssemblyInfo.cs
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\PetProject.OrderManagement.Domain.csproj.CoreCompileInputs.cache
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\PetProject.OrderManagement.Domain.dll
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\refint\PetProject.OrderManagement.Domain.dll
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\PetProject.OrderManagement.Domain.pdb
+C:\Users\quang.tranduy1\PetProject\PetProject.OrderManagement\PetProject.OrderManagement.Domain\obj\Debug\net7.0\ref\PetProject.OrderManagement.Domain.dll

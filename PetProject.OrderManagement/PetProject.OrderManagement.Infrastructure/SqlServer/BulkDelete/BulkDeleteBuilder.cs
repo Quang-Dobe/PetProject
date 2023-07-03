@@ -149,7 +149,12 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkDelete
 
         private string GetDbColumnName(string idColumn)
         {
-            return _dbColumnMappings.ContainsKey(idColumn) ? _dbColumnMappings[idColumn] : idColumn;
+            if (_dbColumnMappings != null && _dbColumnMappings.ContainsKey(idColumn))
+            {
+                return _dbColumnMappings[idColumn];
+            }
+            
+            return idColumn;
         }
 
         private void GenerateDataForTempTable(DataTable dataTable,
@@ -169,7 +174,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkDelete
             {
                 BatchSize = options.BatchSize,
                 BulkCopyTimeout = options.TimeOut,
-                DestinationTableName = $"[{tempTableName}]"
+                DestinationTableName = $"{tempTableName}"
             };
 
             foreach (DataColumn column in dataTable.Columns)

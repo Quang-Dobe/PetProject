@@ -1,12 +1,12 @@
-﻿using System.Data;
+using System.Data;
 using System.Text;
 using Microsoft.Data.SqlClient;
 using PetProject.OrderManagement.CrossCuttingConcerns.Extensions;
 using PetProject.OrderManagement.Infrastructure.SqlServer.Extensions;
 
-namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
+namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkInsertUpdate
 {
-    public class BulkUpdateBuilder<T>
+    public class BulkInsertUpdateBuilder<T>
     {
         private IEnumerable<T> _data;
 
@@ -16,30 +16,29 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
 
         private IDictionary<string, string> _dbColumnMappings;
 
-        private BulkOptions _options;
-
         private string _tableName;
 
         private string _tableNamePrefix;
 
-        private readonly SqlConnection _connection;
+        private BulkOptions _options;
 
-        private readonly SqlTransaction _transaction;
+        private SqlConnection _connection;
+
+        private SqlTransaction _transaction;
 
         #region Constructor
 
-        public BulkUpdateBuilder(SqlConnection connection)
+        public BulkInsertUpdateBuilder(SqlConnection connection)
         {
             _connection = connection;
         }
 
-        public BulkUpdateBuilder(SqlTransaction transaction)
+        public BulkInsertUpdateBuilder(SqlTransaction transaction)
         {
             _transaction = transaction;
-            _connection = transaction.Connection;
         }
 
-        public BulkUpdateBuilder(SqlConnection connection, SqlTransaction transaction = null)
+        public BulkInsertUpdateBuilder(SqlConnection connection, SqlTransaction transaction)
         {
             _connection = connection;
             _transaction = transaction;
@@ -47,51 +46,36 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
 
         #endregion
 
-        public BulkUpdateBuilder<T> WithData(IEnumerable<T> data)
+        public BulkInsertUpdateBuilder<T> WithData(IEnumerable<T> data)
         {
             _data = data;
 
             return this;
         }
 
-        public BulkUpdateBuilder<T> WithIdColumns(IEnumerable<string> idColumns)
+        public BulkInsertUpdateBuilder<T> WithIdColumns(IEnumerable<string> idColumns)
         {
             _idColumns = idColumns;
 
             return this;
         }
 
-        public BulkUpdateBuilder<T> WithColumnNames(IEnumerable<string> columnNames)
+        public BulkInsertUpdateBuilder<T> WithColumnNames(IEnumerable<string> columnNames)
         {
             _columnNames = columnNames;
 
             return this;
         }
 
-        public BulkUpdateBuilder<T> WithDbColumnMappings(IDictionary<string, string> columnMappings)
+        public BulkInsertUpdateBuilder<T> WithDbColumnMappings(IDictionary<string, string> dbColumnMappings)
         {
-            _dbColumnMappings = columnMappings;
+            _dbColumnMappings = dbColumnMappings;
 
             return this;
         }
 
-        public BulkUpdateBuilder<T> WithTable(string tableName)
+        public BulkInsertUpdateBuilder<T> WithConfigureBulkOption(Action<BulkOptions> action)
         {
-            _tableName = tableName;
-
-            return this;
-        }
-
-        public BulkUpdateBuilder<T> WithTablePrefix(string tableNamePrefix = "dbo")
-        {
-            _tableNamePrefix = tableNamePrefix;
-
-            return this;
-        }
-
-        public BulkUpdateBuilder<T> WithConfigureBulkOptions(Action<BulkOptions> action)
-        {
-            _options = new BulkOptions();
             if (action != null)
             {
                 action(_options);
@@ -105,59 +89,70 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
             var tempTableName = "#" + Guid.NewGuid();
 
             var dataTableColumns = new List<string>();
-            dataTableColumns.AddRange(_columnNames);
             dataTableColumns.AddRange(_idColumns);
+            dataTableColumns.AddRange(_columnNames);
 
             var dataTable = _data.ToDataTable(dataTableColumns);
             var sqlQueryCreatingTempTable = dataTable.ToSqlQueryCreatingTable(tempTableName);
-            var sqlQueryUpdatingExitsedTable = GenerateSqlQueryUpdatingExistedTable(tempTableName);
+            var sqlQueryInsertOrUpdateExistedTable = GenerateSqlQueryInsertOrUpdateExistedTable(tempTableName, dataTableColumns);
 
-            // WorkFlow:
-            // + Open connection to database and Keep connection
-            // + Create TempTable
-            // + Insert data to TempTable
-            // + Update ExistedTable
-
-            _connection.EnsureOpen();
-            
-            using (var createTempTableCommand = _connection.CreateTextCommand(_transaction, sqlQueryCreatingTempTable))
+            using(var createTempTable = _connection.CreateTextCommand(_transaction, sqlQueryCreatingTempTable))
             {
-                createTempTableCommand.ExecuteNonQuery();
+                createTempTable.ExecuteNonQuery();
             }
 
             GenerateDataForTempTable(dataTable, tempTableName, _dbColumnMappings, _connection, _transaction, _options);
-            
-            using (var updateExistedTableCommand = _connection.CreateTextCommand(_transaction, sqlQueryUpdatingExitsedTable))
+
+            using(var insertOrUpdateExistedTable = _connection.CreateTextCommand(_transaction, sqlQueryInsertOrUpdateExistedTable))
             {
-                updateExistedTableCommand.ExecuteNonQuery();
+                insertOrUpdateExistedTable.ExecuteNonQuery();
             }
         }
 
         #region Private methods
 
-        private string GenerateSqlQueryUpdatingExistedTable(string tempTableName)
+        private string GenerateSqlQueryInsertOrUpdateExistedTable(string tempTableName, IEnumerable<string> columns)
         {
             var sqlQuery = new StringBuilder();
 
-            // Generate join conditions
-            var joinCondition = string.Join(" and ", _idColumns.Select(x =>
+            var existedColumns = new List<string>();
+            existedColumns.AddRange(_idColumns.Where(x => columns.Contains(x)));
+            existedColumns.AddRange(_columnNames.Where(x => columns.Contains(x)));
+
+            // Generate join condition
+            var joinCondition = string.Join(" and ", existedColumns.Select(x => 
             {
                 var columnName = GetDbColumnName(x);
 
-                return $"a.[{columnName}] = b.[{x}]";
+                return $"a.[{columnName}]=b.[{columnName}]";
             }));
 
-            // Generate set statements
-            var setStatement = string.Join(", ", _columnNames.Select(x =>
+            // Generate insert statement
+            var insertStatementFrom = string.Join(", ", existedColumns.Select(x => 
             {
                 var columnName = GetDbColumnName(x);
 
-                return $"a.[{columnName}] = b.[{columnName}]";
+                return $"a.[{columnName}]";
+            }));
+            var insertedColumnsTo = string.Join(", ", existedColumns.Select(x => GetDbColumnName(x)));
+
+            // Generate update statement
+            var updateStatement = string.Join(", ", _columnNames.Select(x =>
+            {
+                var columnName = GetDbColumnName(x);
+
+                return $"{columnName}=a.[{columnName}]";
             }));
 
-            sqlQuery.AppendLine("UPDATE a");
-            sqlQuery.AppendLine($"SET {setStatement}");
-            sqlQuery.AppendLine($"FROM [{_tableNamePrefix}][{_tableName}] a JOIN {tempTableName} b ON " + joinCondition);
+            // Generate merge statement
+            var mergeStatement = 
+            sqlQuery.AppendLine($"MERGE [{_tableNamePrefix}][{_tableName}] AS b");
+            sqlQuery.AppendLine($"USING {tempTableName} AS a");
+            sqlQuery.AppendLine($"ON {joinCondition}");
+            sqlQuery.AppendLine($"WHEN NOT MATCHED BY TARGET THEN");
+            sqlQuery.AppendLine($"INSERT ({insertedColumnsTo}) VALUES ({insertStatementFrom})");
+            sqlQuery.AppendLine($"WHEN MATCHED BY TARGET THEN");
+            sqlQuery.AppendLine($"UPDATE SET {updateStatement};");
 
             return sqlQuery.ToString();
         }
@@ -168,7 +163,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
             {
                 return _dbColumnMappings[idColumn];
             }
-            
+
             return idColumn;
         }
 
@@ -182,7 +177,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkUpdate
             options ??= new BulkOptions()
             {
                 BatchSize = 0,
-                TimeOut = 30,
+                TimeOut = 30
             };
 
             var bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction)
