@@ -4,85 +4,29 @@ using Microsoft.Data.SqlClient;
 using PetProject.OrderManagement.CrossCuttingConcerns.Extensions;
 using PetProject.OrderManagement.Infrastructure.SqlServer.Extensions;
 
-namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkInsertUpdate
+namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.BulkMerge
 {
-    public class BulkInsertUpdateBuilder<T>
+    public class BulkMergeBuilder<T> : BulkBase<T>
     {
-        private IEnumerable<T> _data;
-
-        private IEnumerable<string> _idColumns;
-
-        private IEnumerable<string> _columnNames;
-
-        private IDictionary<string, string> _dbColumnMappings;
-
-        private string _tableName;
-
-        private string _tableNamePrefix;
-
-        private BulkOptions _options;
-
-        private SqlConnection _connection;
-
-        private SqlTransaction _transaction;
-
         #region Constructor
 
-        public BulkInsertUpdateBuilder(SqlConnection connection)
+        public BulkMergeBuilder(SqlConnection connection)
         {
             _connection = connection;
         }
 
-        public BulkInsertUpdateBuilder(SqlTransaction transaction)
+        public BulkMergeBuilder(SqlTransaction transaction)
         {
             _transaction = transaction;
         }
 
-        public BulkInsertUpdateBuilder(SqlConnection connection, SqlTransaction transaction)
+        public BulkMergeBuilder(SqlConnection connection, SqlTransaction transaction = null)
         {
             _connection = connection;
             _transaction = transaction;
         }
 
         #endregion
-
-        public BulkInsertUpdateBuilder<T> WithData(IEnumerable<T> data)
-        {
-            _data = data;
-
-            return this;
-        }
-
-        public BulkInsertUpdateBuilder<T> WithIdColumns(IEnumerable<string> idColumns)
-        {
-            _idColumns = idColumns;
-
-            return this;
-        }
-
-        public BulkInsertUpdateBuilder<T> WithColumnNames(IEnumerable<string> columnNames)
-        {
-            _columnNames = columnNames;
-
-            return this;
-        }
-
-        public BulkInsertUpdateBuilder<T> WithDbColumnMappings(IDictionary<string, string> dbColumnMappings)
-        {
-            _dbColumnMappings = dbColumnMappings;
-
-            return this;
-        }
-
-        public BulkInsertUpdateBuilder<T> WithConfigureBulkOption(Action<BulkOptions> action)
-        {
-            if (action != null)
-            {
-                action(_options);
-            }
-
-            return this;
-        }
 
         public void Excute()
         {
@@ -122,8 +66,6 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkInsertUpdate
                 insertOrUpdateExistedTable.ExecuteNonQuery();
             }
         }
-
-        #region Private methods
 
         private string GenerateSqlQueryGetColumnsOfCurrentTable()
         {
@@ -180,52 +122,5 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkInsertUpdate
 
             return sqlQuery.ToString();
         }
-
-        private string GetDbColumnName(string idColumn)
-        {
-            if (_dbColumnMappings != null && _dbColumnMappings.ContainsKey(idColumn))
-            {
-                return _dbColumnMappings[idColumn];
-            }
-
-            return idColumn;
-        }
-
-        private void GenerateDataForTempTable(DataTable dataTable,
-            string tempTableName,
-            IDictionary<string, string> dbColumnMappings,
-            SqlConnection connection,
-            SqlTransaction transaction,
-            BulkOptions options = null)
-        {
-            options ??= new BulkOptions()
-            {
-                BatchSize = 0,
-                TimeOut = 30
-            };
-
-            var bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction)
-            {
-                BatchSize = options.BatchSize,
-                BulkCopyTimeout = options.TimeOut,
-                DestinationTableName = $"{tempTableName}"
-            };
-
-            foreach (DataColumn column in dataTable.Columns)
-            {
-                if (dbColumnMappings != null && dbColumnMappings.ContainsKey(column.ColumnName))
-                {
-                    bulkCopy.ColumnMappings.Add(column.ColumnName, dbColumnMappings[column.ColumnName]);
-                }
-                else
-                {
-                    bulkCopy.ColumnMappings.Add(column.ColumnName, column.ColumnName);
-                }
-            }
-
-            bulkCopy.WriteToServer(dataTable);
-        }
-
-        #endregion
     }
 }
