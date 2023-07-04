@@ -88,13 +88,14 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkInsertUpdate
         {
             var tempTableName = "#" + Guid.NewGuid();
 
+            var existedColumns = new List<string>();
             var dataTableColumns = new List<string>();
             dataTableColumns.AddRange(_idColumns);
             dataTableColumns.AddRange(_columnNames);
 
             var dataTable = _data.ToDataTable(dataTableColumns);
             var sqlQueryCreatingTempTable = dataTable.ToSqlQueryCreatingTable(tempTableName);
-            var sqlQueryInsertOrUpdateExistedTable = GenerateSqlQueryInsertOrUpdateExistedTable(tempTableName, dataTableColumns);
+            var sqlQueryGetColumnsOfCurrentTable = GenerateSqlQueryGetColumnsOfCurrentTable();
 
             using(var createTempTable = _connection.CreateTextCommand(_transaction, sqlQueryCreatingTempTable))
             {
@@ -103,6 +104,19 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkInsertUpdate
 
             GenerateDataForTempTable(dataTable, tempTableName, _dbColumnMappings, _connection, _transaction, _options);
 
+            using (var getColumnsOfCurrentTable = _connection.CreateTextCommand(_transaction, sqlQueryGetColumnsOfCurrentTable))
+            {
+                using (var reader = getColumnsOfCurrentTable.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        existedColumns.Add(reader[Constants.Constants.Sql_GetColumnName].ToString());
+                    }
+                }
+            }
+
+            var sqlQueryInsertOrUpdateExistedTable = GenerateSqlQueryInsertOrUpdateExistedTable(tempTableName, existedColumns);
+            
             using(var insertOrUpdateExistedTable = _connection.CreateTextCommand(_transaction, sqlQueryInsertOrUpdateExistedTable))
             {
                 insertOrUpdateExistedTable.ExecuteNonQuery();
@@ -110,6 +124,16 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkInsertUpdate
         }
 
         #region Private methods
+
+        private string GenerateSqlQueryGetColumnsOfCurrentTable()
+        {
+            var sqlQuery = new StringBuilder();
+            sqlQuery.AppendLine("SELECT COLUMN_NAME");
+            sqlQuery.AppendLine("FROM INFORMATION_SCHEMA.COLUMNS");
+            sqlQuery.AppendLine($"WHERE TABLE_NAME = N'[{_tableNamePrefix}][{_tableName}]'");
+
+            return sqlQuery.ToString();
+        }
 
         private string GenerateSqlQueryInsertOrUpdateExistedTable(string tempTableName, IEnumerable<string> columns)
         {
