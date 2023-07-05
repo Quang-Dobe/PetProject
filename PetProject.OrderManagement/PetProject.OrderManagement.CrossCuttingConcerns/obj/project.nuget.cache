@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "26XxQFQJUunU9iKOlstZ+JNYqoJzh+TwYdwPwu1QsObFWmbHo/nIz7cAJx3FYzehig9h+HK9xJysFB7Sl80PGQ==",
+  "dgSpecHash": "WCAP2VMlVngmY41QPdbYs1XF2R+sIjyeiVgT1/36/0IOxxyNNz8Ewzr4et8wF9z5eFz7J8qauXU/4n+dhk04Qw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\quang.tranduy1\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj",
+  "projectFilePath": "C:\\Projects\\PetProject\\PetProject.OrderManagement\\PetProject.OrderManagement.CrossCuttingConcerns\\PetProject.OrderManagement.CrossCuttingConcerns.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\quang.tranduy1\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
-    "C:\\Users\\quang.tranduy1\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+    "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
   ],
   "logs": []
 }
