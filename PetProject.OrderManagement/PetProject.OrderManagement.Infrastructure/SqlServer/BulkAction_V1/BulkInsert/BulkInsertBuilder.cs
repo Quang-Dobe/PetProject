@@ -1,6 +1,5 @@
 using System.Data;
 using System.Text;
-using Microsoft.Data.SqlClient;
 using PetProject.OrderManagement.CrossCuttingConcerns.Extensions;
 using PetProject.OrderManagement.Infrastructure.SqlServer.Extensions;
 
@@ -10,17 +9,17 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
     {
         #region Constructor
 
-        public BulkInsertBuilder(SqlConnection connection)
+        public BulkInsertBuilder(IDbConnection connection)
         {
             _connection = connection;
         }
 
-        public BulkInsertBuilder(SqlTransaction transaction)
+        public BulkInsertBuilder(IDbTransaction transaction)
         {
             _transaction = transaction;
         }
 
-        public BulkInsertBuilder(SqlConnection connection, SqlTransaction transaction = null)
+        public BulkInsertBuilder(IDbConnection connection, IDbTransaction transaction = null)
         {
             _connection = connection;
             _transaction = transaction;
@@ -28,7 +27,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
 
         #endregion
 
-        public void Excute()
+        public override void Excute()
         {
             var tempTableName = "#" + Guid.NewGuid();
 
@@ -90,12 +89,11 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
         {
             var sqlQuery = new StringBuilder();
 
-            var existedColumns = new List<string>();
-            existedColumns.AddRange(_idColumns.Where(x => columns.Contains(x)));
-            existedColumns.AddRange(_columnNames.Where(x => columns.Contains(x)));
+            var existedIdColumns = _idColumns.Where(x => columns.Contains(x));
+            var existedColumnNames = _columnNames.Where(x => columns.Contains(x));
 
             // Generate join condition
-            var joinCondition = string.Join(" and ", _idColumns.Where(x => existedColumns.Contains(x)).Select(x => 
+            var joinCondition = string.Join(" and ", _idColumns.Where(x => existedIdColumns.Contains(x)).Select(x => 
             {
                 var columnName = GetDbColumnName(x);
 
@@ -103,13 +101,13 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
             }));
 
             // Generate insert statement
-            var insertStatementFrom = string.Join(", ", existedColumns.Select(x => 
+            var insertStatementFrom = string.Join(", ", existedColumnNames.Select(x => 
             {
                 var columnName = GetDbColumnName(x);
 
                 return $"a.[{columnName}]";
             }));
-            var insertedColumnsTo = string.Join(", ", existedColumns.Select(x => GetDbColumnName(x)));
+            var insertedColumnsTo = string.Join(", ", existedColumnNames.Select(x => GetDbColumnName(x)));
 
             // Generate merge statement
             var mergeStatement = 

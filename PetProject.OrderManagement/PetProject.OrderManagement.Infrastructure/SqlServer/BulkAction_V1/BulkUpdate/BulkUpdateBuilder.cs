@@ -1,6 +1,5 @@
 using System.Data;
 using System.Text;
-using Microsoft.Data.SqlClient;
 using PetProject.OrderManagement.CrossCuttingConcerns.Extensions;
 using PetProject.OrderManagement.Infrastructure.SqlServer.Extensions;
 
@@ -10,17 +9,17 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
     {
         #region Constructor
 
-        public BulkUpdateBuilder(SqlConnection connection)
+        public BulkUpdateBuilder(IDbConnection connection)
         {
             _connection = connection;
         }
 
-        public BulkUpdateBuilder(SqlTransaction transaction)
+        public BulkUpdateBuilder(IDbTransaction transaction)
         {
             _transaction = transaction;
         }
 
-        public BulkUpdateBuilder(SqlConnection connection, SqlTransaction transaction = null)
+        public BulkUpdateBuilder(IDbConnection connection, IDbTransaction transaction = null)
         {
             _connection = connection;
             _transaction = transaction;
@@ -28,17 +27,18 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
 
         #endregion
 
-        public void Excute()
+        public override void Excute()
         {
             var tempTableName = "#" + Guid.NewGuid();
 
+            var existedColumns = new List<string>();
             var dataTableColumns = new List<string>();
             dataTableColumns.AddRange(_columnNames);
             dataTableColumns.AddRange(_idColumns);
 
             var dataTable = _data.ToDataTable(dataTableColumns);
             var sqlQueryCreatingTempTable = dataTable.ToSqlQueryCreatingTable(tempTableName);
-            var sqlQueryUpdatingExitsedTable = GenerateSqlQueryUpdatingExistedTable(tempTableName);
+            var sqlQueryGetColumnsOfCurrentTable = GenerateSqlQueryGetColumnsOfCurrentTable();
 
             // WorkFlow:
             // + Open connection to database and Keep connection
@@ -54,19 +54,44 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
             }
 
             GenerateDataForTempTable(dataTable, tempTableName, _dbColumnMappings, _connection, _transaction, _options);
-            
+
+            using (var getColumnsOfCurrentTable = _connection.CreateTextCommand(_transaction, sqlQueryGetColumnsOfCurrentTable))
+            {
+                using (var reader = getColumnsOfCurrentTable.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        existedColumns.Add(reader[Constants.Constants.Sql_GetColumnName].ToString());
+                    }
+                }
+            }
+
+            var sqlQueryUpdatingExitsedTable = GenerateSqlQueryUpdatingExistedTable(tempTableName, existedColumns);
+
             using (var updateExistedTableCommand = _connection.CreateTextCommand(_transaction, sqlQueryUpdatingExitsedTable))
             {
                 updateExistedTableCommand.ExecuteNonQuery();
             }
         }
 
-        private string GenerateSqlQueryUpdatingExistedTable(string tempTableName)
+        private string GenerateSqlQueryGetColumnsOfCurrentTable()
         {
             var sqlQuery = new StringBuilder();
+            sqlQuery.AppendLine("SELECT COLUMN_NAME");
+            sqlQuery.AppendLine("FROM INFORMATION_SCHEMA.COLUMNS");
+            sqlQuery.AppendLine($"WHERE TABLE_NAME = N'[{_tableNamePrefix}][{_tableName}]'");
+
+            return sqlQuery.ToString();
+        }
+
+        private string GenerateSqlQueryUpdatingExistedTable(string tempTableName, IEnumerable<string> columns)
+        {
+            var sqlQuery = new StringBuilder();
+            var existedIdColumns = _idColumns.Where(x => columns.Contains(x));
+            var existedColumnNames = _columnNames.Where(x => columns.Contains(x));
 
             // Generate join conditions
-            var joinCondition = string.Join(" and ", _idColumns.Select(x =>
+            var joinCondition = string.Join(" and ", existedIdColumns.Select(x =>
             {
                 var columnName = GetDbColumnName(x);
 
@@ -74,7 +99,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
             }));
 
             // Generate set statements
-            var setStatement = string.Join(", ", _columnNames.Select(x =>
+            var setStatement = string.Join(", ", existedColumnNames.Select(x =>
             {
                 var columnName = GetDbColumnName(x);
 

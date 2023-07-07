@@ -3,8 +3,10 @@ using Microsoft.Data.SqlClient;
 
 namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1
 {
-    public class BulkBase<T>
+    public abstract class BulkBase<T>
     {
+        #region Base properties
+
         protected IEnumerable<T> _data;
 
         protected IEnumerable<string> _idColumns;
@@ -19,9 +21,11 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1
 
         protected string _tableNamePrefix;
 
-        protected SqlConnection _connection;
+        protected IDbConnection _connection;
 
-        protected SqlTransaction _transaction;
+        protected IDbTransaction _transaction;
+
+        #endregion
 
         #region Base methods
 
@@ -92,8 +96,8 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1
         protected void GenerateDataForTempTable(DataTable dataTable,
             string tempTableName,
             IDictionary<string, string> dbColumnMappings,
-            SqlConnection connection,
-            SqlTransaction transaction,
+            IDbConnection connection,
+            IDbTransaction transaction,
             BulkOptions options)
         {
             options ??= new BulkOptions()
@@ -102,7 +106,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1
                 TimeOut = _options.TimeOut
             };
 
-            var bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction)
+            var bulkCopy = new SqlBulkCopy((SqlConnection)connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction)
             {
                 BatchSize = options.BatchSize,
                 BulkCopyTimeout = options.TimeOut,
@@ -125,5 +129,8 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1
         }
 
         #endregion
+
+        public virtual void Excute()
+        { }
     }
 }
