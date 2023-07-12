@@ -38,10 +38,20 @@ namespace PetProject.IdentityServer.Persistence.Repositories
         {
             _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
         }
-    
+
+        public void SaveChange()
+        {
+            _dbContext.SaveChanges();
+        }
+
         public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             await _dbContext.AddAsync(entity, cancellationToken);
+        }
+    
+        public async Task SaveChangeAsync()
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

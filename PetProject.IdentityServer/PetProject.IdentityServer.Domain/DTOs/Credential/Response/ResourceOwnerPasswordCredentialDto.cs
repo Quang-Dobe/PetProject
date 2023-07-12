@@ -1,6 +1,6 @@
 using PetProject.IdentityServer.Enums;
 
-namespace PetProject.IdentityServer.Domain.DTOs.Credential
+namespace PetProject.IdentityServer.Domain.DTOs.Credential.Response
 {
     public class ResourceOwnerPasswordCredentialDto
     {

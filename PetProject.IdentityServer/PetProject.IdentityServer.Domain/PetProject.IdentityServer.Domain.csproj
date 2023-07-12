@@ -10,4 +10,8 @@
     <ProjectReference Include="..\PetProject.IdentityServer.CrossCuttingConcerns\PetProject.IdentityServer.CrossCuttingConcerns.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\User\Response\" />
+  </ItemGroup>
+
 </Project>

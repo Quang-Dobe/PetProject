@@ -39,6 +39,7 @@ namespace PetProject.IdentityServer.Persistence.Extensions
             }));
 
             services.AddIdentityCore<User>();
+            services.AddTransient<IPasswordHasher<User>, PasswordHasher>();
             services.AddTransient<IUserStore<User>, UserStore>();
             services.AddTransient<MyUserManager, MyUserManager>();
             services.Configure<PasswordHasherOptions>(option =>

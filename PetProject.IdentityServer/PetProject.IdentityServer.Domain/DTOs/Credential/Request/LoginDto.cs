@@ -1,4 +1,4 @@
-﻿namespace PetProject.IdentityServer.Domain.DTOs
+﻿namespace PetProject.IdentityServer.Domain.DTOs.Credential.Request
 {
     public class LoginDto
     {

@@ -10,11 +10,11 @@ using PetProject.IdentityServer.CrossCuttingConcerns.OS;
 using PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting;
 using PetProject.IdentityServer.Persistence.MyIdentity.MyManager;
 using PetProject.IdentityServer.Persistence.Extensions;
-using PetProject.IdentityServer.Domain.DTOs.Credential;
-using PetProject.IdentityServer.Domain.DTOs;
 using PetProject.IdentityServer.Domain.Repositories;
 using PetProject.IdentityServer.Domain.Entities;
 using PetProject.IdentityServer.Domain.Services;
+using PetProject.IdentityServer.Domain.DTOs.Credential.Response;
+using PetProject.IdentityServer.Domain.DTOs.Credential.Request;
 
 namespace PetProject.IdentityServer.Application.Services
 {
@@ -63,7 +63,7 @@ namespace PetProject.IdentityServer.Application.Services
 
         public async Task<CredentialResultDto<ClientCredentialDto>> GrantClientCredentialAsync(LoginDto request)
         {
-            string ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            string ipAddress = GetIpAddress();
             string clientId;
             string clientSecret;
 
@@ -120,7 +120,7 @@ namespace PetProject.IdentityServer.Application.Services
 
         public async Task<CredentialResultDto<ResourceOwnerPasswordCredentialDto>> GrantResourceOwnerPasswordCredentialAsync(LoginDto request)
         {
-            var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            var ipAddress = GetIpAddress();
 
             _stopwatch = Stopwatch.StartNew();
 
@@ -230,7 +230,7 @@ namespace PetProject.IdentityServer.Application.Services
 
         public async Task<CredentialResultDto<object>> RefreshTokenAsync(LoginDto request)
         {
-            var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            var ipAddress = GetIpAddress();
             var refreshTokenHead = request.RefreshToken.Split('.')[0];
             var refreshToken = _refreshTokenRepository.GetAll().Where(x => x.Key == refreshTokenHead).FirstOrDefault();
 
@@ -288,7 +288,7 @@ namespace PetProject.IdentityServer.Application.Services
 
         public async Task<CredentialResultDto<ClientCredentialDto>> RefreshTokenForClientCredentialAsync(LoginDto request, RefreshToken refreshToken)
         {
-            var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            var ipAddress = GetIpAddress();
 
             try
             {
@@ -333,7 +333,7 @@ namespace PetProject.IdentityServer.Application.Services
 
         public async Task<CredentialResultDto<ResourceOwnerPasswordCredentialDto>> RefreshTokenForResourceOwnerCredentialAsync(LoginDto request, RefreshToken refreshToken)
         {
-            var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            var ipAddress = GetIpAddress();
 
             try
             {
@@ -385,6 +385,7 @@ namespace PetProject.IdentityServer.Application.Services
         }
 
         #region Private methods
+
         private JwtSecurityToken GenerateToken(List<Claim> authClaims, DateTime expires, string securityAlgorithm)
         {
             var symetricKey = new SymmetricSecurityKey(Convert.FromBase64String(_appSettings.Auth.Jwt.SymmetricKey));
@@ -413,6 +414,13 @@ namespace PetProject.IdentityServer.Application.Services
             return Convert.ToBase64String(randomNumber);
         }
 
+        private string GetIpAddress()
+        {
+            var remoteIpAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress;
+
+            return remoteIpAddress != null ? remoteIpAddress.ToString() : "";
+        }
+
         private void LogTrace(string? userName, string? clientId, string? ipAddress, string? message)
         {
             _stopwatch.Stop();
@@ -420,6 +428,7 @@ namespace PetProject.IdentityServer.Application.Services
             _logger.LogInformation(string.Format(" UserName: {0} - ClientID: {1} - IpAddress: {2} ", userName, clientId, ipAddress));
             _logger.LogInformation(string.Format(" Message: {0} ", message));
         }
+        
         #endregion
     }
 }

@@ -1,6 +1,6 @@
 ﻿using PetProject.IdentityServer.Domain.Entities;
-using PetProject.IdentityServer.Domain.DTOs;
-using PetProject.IdentityServer.Domain.DTOs.Credential;
+using PetProject.IdentityServer.Domain.DTOs.Credential.Response;
+using PetProject.IdentityServer.Domain.DTOs.Credential.Request;
 
 namespace PetProject.IdentityServer.Domain.Services
 {

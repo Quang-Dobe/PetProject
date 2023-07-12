@@ -18,7 +18,14 @@ namespace PetProject.IdentityServer.Persistence
             _dateTimeProvider = dateTimeProvider;
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
+        }
+
         #region Implement IUnitOfWork
+
         public IDisposable BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             _transaction = Database.BeginTransaction(isolationLevel);
@@ -81,12 +88,7 @@ namespace PetProject.IdentityServer.Persistence
                 }
             }
         }
+        
         #endregion
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
-        }
     }
 }

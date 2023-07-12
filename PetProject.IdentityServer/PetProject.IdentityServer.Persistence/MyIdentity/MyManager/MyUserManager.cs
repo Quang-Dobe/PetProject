@@ -33,7 +33,7 @@ namespace PetProject.IdentityServer.Persistence.MyIdentity.MyManager
             if (userStore != null)
             {
                 return userStore.SendEmailAccountLockoutAsync(
-                    _appSettings.EmailSender.LockoutTitle,
+                    _appSettings.EmailSender.AccountLockoutTitle,
                     _appSettings.EmailSender.FromEmail,
                     _appSettings.EmailSender.FromName,
                     userName,

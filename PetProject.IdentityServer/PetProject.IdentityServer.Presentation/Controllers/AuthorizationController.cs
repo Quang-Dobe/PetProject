@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetProject.IdentityServer.Domain.Constants;
-using PetProject.IdentityServer.Domain.DTOs;
 using PetProject.IdentityServer.Domain.DTOs.Common;
+using PetProject.IdentityServer.Domain.DTOs.Credential.Request;
+using PetProject.IdentityServer.Domain.DTOs.Credential.Response;
 using PetProject.IdentityServer.Domain.Services;
 
 namespace PetProject.IdentityServer.Presentation.Controllers

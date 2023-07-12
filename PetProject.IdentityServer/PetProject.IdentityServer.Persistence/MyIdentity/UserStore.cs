@@ -254,6 +254,8 @@ namespace PetProject.IdentityServer.Persistence.MyIdentity
 
         public Task SetPasswordHashAsync(User user, string? passwordHash, CancellationToken cancellationToken)
         {
+            user.PasswordHash = passwordHash;
+
             return Task.CompletedTask;
         }
 

@@ -12,5 +12,7 @@
         }
 
         public static int AccountLockoutTimeSpan = 5;
+
+        public static int GeneratedPasswordLength = 12;
     }
 }

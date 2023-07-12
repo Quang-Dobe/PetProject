@@ -10,6 +10,10 @@
 
         void Delete(TEntity entity);
 
+        void SaveChange();
+
         Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
+
+        Task SaveChangeAsync();
     }
 }

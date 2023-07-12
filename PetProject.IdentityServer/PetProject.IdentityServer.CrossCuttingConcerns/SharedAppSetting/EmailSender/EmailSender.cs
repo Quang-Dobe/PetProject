@@ -6,6 +6,8 @@
 
         public string FromEmail { get; }
 
-        public string LockoutTitle { get; }
+        public string AccountLockoutTitle { get; }
+
+        public string RegisterNewUserTitle { get; }
     }
 }
