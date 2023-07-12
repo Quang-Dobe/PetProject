@@ -77,7 +77,7 @@ namespace PetProject.IdentityServer.Application.Services
 
             if (clientId.IsNullOrEmpty() || clientSecret.IsNullOrEmpty())
             {
-                LogTrace(request.UserName, clientId, ipAddress, "Invalid ClientID / ClientSecret");
+                LogTrace(request.UserName, clientId, ipAddress, "[AuthorizationService - GrantClientCredential] Invalid ClientID / ClientSecret");
                 throw new UnauthorizedAccessException("Invalid ClientID / ClientSecret");
             }
 
@@ -114,7 +114,7 @@ namespace PetProject.IdentityServer.Application.Services
                 };
             }
 
-            LogTrace(request.UserName, clientId, ipAddress, "Invalid ClientID / ClientSecret");
+            LogTrace(request.UserName, clientId, ipAddress, "[AuthorizationService - GrantClientCredential] Invalid ClientID / ClientSecret");
             throw new UnauthorizedAccessException("Invalid ClientID / ClientSecret");
         }
 
@@ -130,7 +130,7 @@ namespace PetProject.IdentityServer.Application.Services
             {
                 if (await _userManager.IsLockedOutAsync(user))
                 {
-                    LogTrace(request.UserName, request.ClientId, "", "User is locked out");
+                    LogTrace(request.UserName, request.ClientId, "", "[AuthorizationService - GrantResourceOwnerPassword] User is locked out");
                     throw new UnauthorizedAccessException("User has exceeded login attempts and account is locked out");
                 }
 
@@ -143,7 +143,7 @@ namespace PetProject.IdentityServer.Application.Services
 
                     if (!user.Status)
                     {
-                        LogTrace(request.UserName, request.ClientId, "", "User is inactive");
+                        LogTrace(request.UserName, request.ClientId, "", "[AuthorizationService - GrantResourceOwnerPassword] User is inactive");
                         throw new UnauthorizedAccessException("User is not active for login");
                     }
                     else if (user.RequirePasswordChanged)
@@ -219,12 +219,12 @@ namespace PetProject.IdentityServer.Application.Services
                         _logger.LogInformation(string.Format("User {0} has been locked out", user.UserName));
                     }
 
-                    LogTrace(request.UserName, request.ClientId, "", "Invalid Password");
+                    LogTrace(request.UserName, request.ClientId, "", "[AuthorizationService - GrantResourceOwnerPassword] Invalid Password");
                     throw new UnauthorizedAccessException("Invalid Username or Password");
                 }
             }
 
-            LogTrace(request.UserName, request.ClientId, ipAddress, "Invalid Username");
+            LogTrace(request.UserName, request.ClientId, ipAddress, "[AuthorizationService - GrantResourceOwnerPassword] Invalid Username");
             throw new UnauthorizedAccessException("Invalid Username or Password");
         }
 
@@ -236,25 +236,25 @@ namespace PetProject.IdentityServer.Application.Services
 
             if (refreshToken == null)
             {
-                LogTrace(request.UserName, request.ClientId, ipAddress, "Not Exist RefreshToken");
+                LogTrace(request.UserName, request.ClientId, ipAddress, "[AuthorizationService - RefreshToken] Not Exist RefreshToken");
                 throw new HttpRequestException("Not Exist RefreshToken");
             }
             else if (refreshToken.ConsumedTime != null)
             {
-                LogTrace(request.UserName, request.ClientId, ipAddress, "Exist Consumed Time");
+                LogTrace(request.UserName, request.ClientId, ipAddress, "[AuthorizationService - RefreshToken] Exist Consumed Time");
                 throw new HttpRequestException("Exist Consumed Time");
             }
             else if (refreshToken.Expiration < DateTimeOffset.Now)
             {
                 await _refreshTokenRepository.DeleteAsync(refreshToken);
 
-                LogTrace(request.UserName, request.ClientId, ipAddress, "Expired Refresh Token");
+                LogTrace(request.UserName, request.ClientId, ipAddress, "[AuthorizationService - RefreshToken] Expired Refresh Token");
                 throw new HttpRequestException("Expired Refresh Token");
             }
             else if (request.RefreshToken.IsNullOrEmpty() ||
                 !_refreshTokenRepository.CompareClientSecret(refreshToken.TokenHash, request.RefreshToken, _securityAlgorithm))
             {
-                LogTrace(request.UserName, request.ClientId, ipAddress, "Invalid Refresh Token");
+                LogTrace(request.UserName, request.ClientId, ipAddress, "[AuthorizationService - RefreshToken] Invalid Refresh Token");
             }
             
             if (!refreshToken.UserId.IsNullOrEmpty())
@@ -282,7 +282,7 @@ namespace PetProject.IdentityServer.Application.Services
                 };
             }
 
-            LogTrace(request.UserName, request.ClientId, ipAddress, "Invalid UserID / ClientID");
+            LogTrace(request.UserName, request.ClientId, ipAddress, "[AuthorizationService - RefreshToken] Invalid UserID / ClientID");
             throw new UnauthorizedAccessException("Invalid Information for Refresh Token");
         }
 
@@ -326,7 +326,7 @@ namespace PetProject.IdentityServer.Application.Services
             }
             catch
             {
-                LogTrace(request.UserName, refreshToken.ClientId, ipAddress, "Invalid ClientID or Something else!");
+                LogTrace(request.UserName, refreshToken.ClientId, ipAddress, "[AuthorizationService - RefreshTokenForClientCredential] Invalid ClientID or Something else!");
                 throw new UnauthorizedAccessException("There is something wrong");
             }
         }
@@ -379,7 +379,7 @@ namespace PetProject.IdentityServer.Application.Services
             }
             catch
             {
-                LogTrace(request.UserName, refreshToken.ClientId, ipAddress, "Invalid UserID or Something else!");
+                LogTrace(request.UserName, refreshToken.ClientId, ipAddress, "[AuthorizationService - RefreshTokenForResourceOwnerPassword] Invalid UserID or Something else!");
                 throw new UnauthorizedAccessException("There is something wrong");
             }
         }
