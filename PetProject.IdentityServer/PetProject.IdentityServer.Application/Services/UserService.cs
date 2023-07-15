@@ -14,6 +14,7 @@ using PetProject.IdentityServer.Domain.DTOs.User.Request;
 using PetProject.IdentityServer.Domain.Entities;
 using PetProject.IdentityServer.Domain.Repositories;
 using PetProject.IdentityServer.Domain.Services;
+using PetProject.IdentityServer.Persistence.MyIdentity.MyManager;
 
 namespace PetProject.IdentityServer.Application.Services
 {
@@ -33,6 +34,8 @@ namespace PetProject.IdentityServer.Application.Services
 
         private readonly ILogger<UserService> _logger;
 
+        private readonly MyUserManager _userManager;
+
         private readonly AppSettings _appSettings;
 
         private Stopwatch _stopwatch;
@@ -45,6 +48,7 @@ namespace PetProject.IdentityServer.Application.Services
             IHttpContextAccessor httpContextAccessor,
             IPasswordHasher<User> passwordHasher,
             ILogger<UserService> logger,
+            MyUserManager userManager,
             AppSettings appSettings)
         {
             _htmlGenerator = htmlGenerator;
@@ -54,6 +58,7 @@ namespace PetProject.IdentityServer.Application.Services
             _httpContextAccessor = httpContextAccessor;
             _passwordHasher = passwordHasher;
             _logger = logger;
+            _userManager = userManager;
             _appSettings = appSettings;
         }
 
@@ -67,7 +72,22 @@ namespace PetProject.IdentityServer.Application.Services
                 || userInformation.FirstName.IsNullOrEmpty()
                 || userInformation.PhoneNumber.IsNullOrEmpty())
             {
-                throw new ArgumentNullException();
+                throw new BadHttpRequestException("Invalid User Information");
+            }
+
+            var ipAddress = GetIpAddress();
+            var existedUserWithEmail = await _userManager.FindByEmailAsync(userInformation.UserName);
+            var existedUserWithPhoneNumber = await _userManager.FindByPhoneNumberAsync(userInformation.PhoneNumber);
+
+            if (existedUserWithEmail != null)
+            {
+                LogTrace(userInformation.UserName, "", ipAddress, "[UserService - RegisterNewUser] Existed User");
+                throw new BadHttpRequestException("Existed User");
+            }
+            if (existedUserWithPhoneNumber != null)
+            {
+                LogTrace(userInformation.UserName, "", ipAddress, "[UserService - RegisterNewUser] Existed PhoneNumber");
+                throw new BadHttpRequestException("Existed PhoneNumber");
             }
 
             var password = GeneratePassword();
@@ -100,14 +120,13 @@ namespace PetProject.IdentityServer.Application.Services
                 LogTrace("", "", ipAddress, "[UserService - UpdateUser] Invalid UserInformation");
                 throw new BadHttpRequestException("Invalid UserInformation");
             }
-
             if (userInformation.Id == null)
             {
                 LogTrace(userInformation.UserName, "", ipAddress, "[UserService - UpdateUser] Invalid UserId");
                 throw new BadHttpRequestException("Invalid UserId");
             }
 
-            var user = await _userRepository.GetAll().Where(x => x.Id == userInformation.Id).FirstOrDefaultAsync();
+            var user = await _userManager.FindByIdAsync(userInformation.Id.ToString());
 
             if (user == null)
             {
@@ -115,7 +134,6 @@ namespace PetProject.IdentityServer.Application.Services
                 throw new BadHttpRequestException("Invalid UserId");
             }
 
-            user.UserName = userInformation.UserName ?? user.UserName;
             user.FirstName = userInformation.FirstName ?? user.FirstName;
             user.MiddleName = userInformation.MiddleName ?? user.MiddleName;
             user.LastName = userInformation.LastName ?? user.LastName;
@@ -132,13 +150,17 @@ namespace PetProject.IdentityServer.Application.Services
                         user.SecurityStamp = GenerateSecurityStamp();
                         user.PasswordHash = _passwordHasher.HashPassword(user, userInformation.NewPassword);
                     }
-
-                    LogTrace(user.UserName, "", ipAddress, "[UserService - UpdateUser] Invalid OldPassword");
-                    throw new BadHttpRequestException("Invalid OldPassword");
+                    else
+                    {
+                        LogTrace(user.UserName, "", ipAddress, "[UserService - UpdateUser] Invalid OldPassword");
+                        throw new BadHttpRequestException("Invalid OldPassword");
+                    }
                 }
-
-                LogTrace(user.UserName, "", ipAddress, "[UserService - UpdateUser] OldPassword or NewPassword is empty");
-                throw new BadHttpRequestException("OldPassword or NewPassword is empty");
+                else
+                {
+                    LogTrace(user.UserName, "", ipAddress, "[UserService - UpdateUser] OldPassword or NewPassword is empty");
+                    throw new BadHttpRequestException("OldPassword or NewPassword is empty");
+                }
             }
 
             await _userRepository.SaveChangeAsync();
@@ -152,7 +174,7 @@ namespace PetProject.IdentityServer.Application.Services
 
             var ipAddress = GetIpAddress();
 
-            var user = await _userRepository.GetAll().Where(x => x.Id == userId).FirstOrDefaultAsync();
+            var user = await _userManager.FindByIdAsync(userId.ToString());
 
             if (user == null)
             {
@@ -205,7 +227,7 @@ namespace PetProject.IdentityServer.Application.Services
                 await _userRepository.SaveChangeAsync();
 
                 LogTrace(user.UserName, "", ipAddress, "[UserService - RegisterNewUser] Invalid ClientID / ClientSecret");
-                throw new Exception(ex.Message);
+                throw new BadHttpRequestException("Invalid ClientID / ClientSecret");
             }
         }
 

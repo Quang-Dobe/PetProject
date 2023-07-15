@@ -295,13 +295,13 @@ namespace PetProject.IdentityServer.Application.Services
                 var clientId = refreshToken.ClientId;
                 var issueAt = _dateTimeProvider.Now;
                 var permClaims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier, clientId),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, issueAt.ToString()),
-                new Claim("urn:oauth:scope", string.Empty),
-                new Claim("client_id", clientId)
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, clientId),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Iat, issueAt.ToString()),
+                    new Claim("urn:oauth:scope", string.Empty),
+                    new Claim("client_id", clientId)
+                };
 
                 var expires = _dateTimeProvider.Now.AddMinutes(_appSettings.Auth.RefreshTokenLifetime.ClientCredentials);
                 var token = GenerateToken(permClaims, expires, _securityAlgorithm);
@@ -340,13 +340,13 @@ namespace PetProject.IdentityServer.Application.Services
                 var userId = refreshToken.UserId;
                 var issueAt = _dateTimeProvider.Now;
                 var permClaims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier, userId),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, issueAt.ToString()),
-                new Claim("urn:oauth:scope", string.Empty),
-                new Claim("user_id", userId)
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, userId),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Iat, issueAt.ToString()),
+                    new Claim("urn:oauth:scope", string.Empty),
+                    new Claim("user_id", userId)
+                };
 
                 var expires = _dateTimeProvider.Now.AddMinutes(_appSettings.Auth.RefreshTokenLifetime.ClientCredentials);
                 var token = GenerateToken(permClaims, expires, _securityAlgorithm);

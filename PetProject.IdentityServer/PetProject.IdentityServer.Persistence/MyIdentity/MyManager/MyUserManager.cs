@@ -41,5 +41,16 @@ namespace PetProject.IdentityServer.Persistence.MyIdentity.MyManager
             }
             return Task.CompletedTask;
         }
+
+        public async Task<User?> FindByPhoneNumberAsync(string phoneNumber)
+        {
+            var userStore = Store as UserStore;
+            if (userStore != null)
+            {
+                return await userStore.FindByPhoneNumberAsync(phoneNumber, CancellationToken);
+            }
+
+            return new User();
+        }
     }
 }

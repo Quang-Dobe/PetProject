@@ -94,6 +94,11 @@ namespace PetProject.IdentityServer.Persistence.MyIdentity
             return _userRepository.GetAll().FirstOrDefaultAsync(x => x.UserName == normalizedUserName);
         }
 
+        public Task<User?> FindByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken)
+        {
+            return _userRepository.GetAll().FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+        }
+
         public Task<string> GetUserIdAsync(User user, CancellationToken cancellationToken)
         {
             return Task.FromResult(user.Id.ToString());

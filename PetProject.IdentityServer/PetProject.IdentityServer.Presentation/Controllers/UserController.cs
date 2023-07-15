@@ -25,9 +25,9 @@ namespace PetProject.IdentityServer.Presentation.Controllers
 
                 return Ok();
             }
-            catch (ArgumentNullException nullEx)
+            catch (BadHttpRequestException ex)
             {
-                return BadRequest(nullEx.Message);
+                return BadRequest(ex.Message);
             }
             catch 
             {
@@ -45,7 +45,7 @@ namespace PetProject.IdentityServer.Presentation.Controllers
 
                 return Ok();
             }
-            catch (ArgumentNullException ex)
+            catch (BadHttpRequestException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -64,6 +64,10 @@ namespace PetProject.IdentityServer.Presentation.Controllers
                 await _userService.ChangeUserStatus(id, status);
 
                 return Ok();
+            }
+            catch (BadHttpRequestException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch
             {
