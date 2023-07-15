@@ -14,8 +14,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<AppSettings>(configuration)
-    .AddSingleton(sp => sp.GetRequiredService<IOptions<AppSettings>>().Value);
 builder.Services.AddCrossCuttingConcerns();
 builder.Services.AddPersistence(configuration.GetConnectionString("Identity"), "");
 builder.Services.AddInfrastructure();

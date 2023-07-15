@@ -1,11 +1,20 @@
-﻿namespace PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting
+﻿using Microsoft.Extensions.Configuration;
+
+namespace PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting
 {
     public class Jwt
     {
-        public string Issuer { get; }
+        private readonly IConfiguration _configuration;
 
-        public string Audience { get; }
+        public Jwt(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
-        public string SymmetricKey { get; }
+        public string Issuer => _configuration["Auth:Jwt:Issuer"];
+
+        public string Audience => _configuration["Auth:Jwt:Audience"];
+
+        public string SymmetricKey => _configuration["Auth:Jwt:SymmetricKey"];
     }
 }

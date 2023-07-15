@@ -7,6 +7,7 @@ namespace PetProject.IdentityServer.Domain.DTOs.User.Request
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Required field")]
+        [EmailAddress(ErrorMessage = "Invalid Email")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Required field")]

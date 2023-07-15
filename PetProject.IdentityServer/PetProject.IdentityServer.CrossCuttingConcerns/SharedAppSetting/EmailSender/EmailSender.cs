@@ -1,13 +1,22 @@
-﻿namespace PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting
+﻿using Microsoft.Extensions.Configuration;
+
+namespace PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting
 {
     public class EmailSender
     {
-        public string FromName { get; }
+        private readonly IConfiguration _configuration;
 
-        public string FromEmail { get; }
+        public EmailSender(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
-        public string AccountLockoutTitle { get; }
+        public string FromName => _configuration["EmailSender:FromName"];
 
-        public string RegisterNewUserTitle { get; }
+        public string FromEmail => _configuration["EmailSender:FromEmail"];
+
+        public string AccountLockoutTitle => _configuration["EmailSender:AccountLockoutTitle"];
+
+        public string RegisterNewUserTitle => _configuration["EmailSender:RegisterNewUserTitle"];
     }
 }

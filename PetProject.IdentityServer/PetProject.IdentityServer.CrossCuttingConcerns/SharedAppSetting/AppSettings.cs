@@ -1,13 +1,25 @@
-﻿namespace PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting
+﻿using Microsoft.Extensions.Configuration;
+
+namespace PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting
 {
     public class AppSettings
     {
-        public ConnectionStrings ConnectionStrings { get; }
+        private IConfiguration _configuration;
 
-        public Auth Auth { get; }
+        public AppSettings(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            Auth = new Auth(configuration);
+            EmailSender = new EmailSender(configuration);
+            ConnectionStrings = new ConnectionStrings(configuration);
+        }
 
-        public EmailSender EmailSender { get; }
+        public Auth Auth { get; set; }
 
-        public string AllowedHosts { get; }
+        public EmailSender EmailSender { get;set; }
+
+        public ConnectionStrings ConnectionStrings { get; set; }
+
+        public string AllowedHosts => _configuration["AllowedHosts"];
     }
 }

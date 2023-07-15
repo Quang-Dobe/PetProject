@@ -1,9 +1,18 @@
-﻿namespace PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting
+﻿using Microsoft.Extensions.Configuration;
+
+namespace PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting
 {
     public class RefreshTokenLifetime
     {
-        public double ResourceOwnerCredentials { get; }
+        private readonly IConfiguration _configuration;
 
-        public double ClientCredentials { get; }
+        public RefreshTokenLifetime(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public double ResourceOwnerCredentials => Convert.ToDouble(_configuration["Auth:RefreshTokenLifetime:ResourceOwnerCredentials"]);
+
+        public double ClientCredentials => Convert.ToDouble(_configuration["Auth:RefreshTokenLifetime:ClientCredentials"]);
     }
 }
