@@ -8,20 +8,8 @@ namespace PetProject.IdentityServer.CrossCuttingConcerns.Extensions
     {
         public static IServiceCollection AddCrossCuttingConcerns(this IServiceCollection services)
         {
-            services.AddSharedAppSetting();
-            services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-
-            return services;
-        }
-
-        public static IServiceCollection AddSharedAppSetting(this IServiceCollection services)
-        {
-            services.AddSingleton<Jwt>();
-            services.AddSingleton<AccessTokenLifetime>();
-            services.AddSingleton<RefreshTokenLifetime>();
-            services.AddSingleton<ConnectionStrings>();
-            services.AddSingleton<EmailSender>();
             services.AddSingleton<AppSettings>();
+            services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
             return services;
         }

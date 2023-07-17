@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
-using PetProject.IdentityServer.CrossCuttingConcerns.HtmlGenerator;
-using PetProject.IdentityServer.CrossCuttingConcerns.OS;
 using PetProject.IdentityServer.Domain.Constants;
 using PetProject.IdentityServer.Domain.DTOs;
 using PetProject.IdentityServer.Domain.Entities;
 using PetProject.IdentityServer.Domain.Repositories;
+using PetProject.IdentityServer.Domain.ThirdPartyServices;
+using PetProject.IdentityServer.CrossCuttingConcerns.OS;
+using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
 
 namespace PetProject.IdentityServer.Persistence.MyIdentity
 {

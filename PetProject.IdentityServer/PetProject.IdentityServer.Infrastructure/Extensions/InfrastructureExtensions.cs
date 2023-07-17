@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PetProject.IdentityServer.CrossCuttingConcerns.HtmlGenerator;
-using PetProject.IdentityServer.Infrastructure.HtmlGeneratorServices;
+using PetProject.IdentityServer.Domain.ThirdPartyServices;
+using PetProject.IdentityServer.Infrastructure.HtmlGeneratorService;
 using RazorLight;
 
 namespace PetProject.IdentityServer.Infrastructure.Extensions

@@ -22,13 +22,13 @@ namespace PetProject.IdentityServer.Persistence.Extensions
                 return services.GetRequiredService<IdentityDbContext>();
             });
 
-            services = AddIdentityDbContext(services, connectionString, migrationAssembly);
-            services = AddRepositories(services);
+            services.AddIdentityDbContext(connectionString, migrationAssembly);
+            services.AddRepositories();
 
             return services;
         }
 
-        public static IServiceCollection AddIdentityDbContext(IServiceCollection services, string connectionString, string migrationAssembly)
+        public static IServiceCollection AddIdentityDbContext(this IServiceCollection services, string connectionString, string migrationAssembly)
         {
             services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(connectionString, sql =>
             {
@@ -50,7 +50,7 @@ namespace PetProject.IdentityServer.Persistence.Extensions
             return services;
         }
 
-        public static IServiceCollection AddRepositories(IServiceCollection services)
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             foreach (var exportedType in Assembly.GetExecutingAssembly().GetExportedTypes())
             {

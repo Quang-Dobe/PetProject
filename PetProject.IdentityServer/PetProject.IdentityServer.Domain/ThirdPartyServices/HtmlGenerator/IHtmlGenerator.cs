@@ -1,4 +1,4 @@
-﻿namespace PetProject.IdentityServer.CrossCuttingConcerns.HtmlGenerator
+﻿namespace PetProject.IdentityServer.Domain.ThirdPartyServices
 {
     public interface IHtmlGenerator
     {

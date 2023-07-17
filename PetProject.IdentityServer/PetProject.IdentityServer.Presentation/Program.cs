@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Options;
-using PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting;
 using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
 using PetProject.IdentityServer.Infrastructure.Extensions;
 using PetProject.IdentityServer.Persistence.Extensions;

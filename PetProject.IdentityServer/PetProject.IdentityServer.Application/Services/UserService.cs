@@ -2,19 +2,18 @@
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
-using PetProject.IdentityServer.CrossCuttingConcerns.HtmlGenerator;
-using PetProject.IdentityServer.CrossCuttingConcerns.OS;
-using PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting;
-using PetProject.IdentityServer.Domain.Constants;
 using PetProject.IdentityServer.Domain.DTOs;
-using PetProject.IdentityServer.Domain.DTOs.User.Request;
 using PetProject.IdentityServer.Domain.Entities;
-using PetProject.IdentityServer.Domain.Repositories;
 using PetProject.IdentityServer.Domain.Services;
+using PetProject.IdentityServer.Domain.Constants;
+using PetProject.IdentityServer.Domain.Repositories;
+using PetProject.IdentityServer.Domain.DTOs.User.Request;
+using PetProject.IdentityServer.Domain.ThirdPartyServices;
 using PetProject.IdentityServer.Persistence.MyIdentity.MyManager;
+using PetProject.IdentityServer.CrossCuttingConcerns.OS;
+using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
+using PetProject.IdentityServer.CrossCuttingConcerns.SharedAppSetting;
 
 namespace PetProject.IdentityServer.Application.Services
 {
@@ -222,7 +221,7 @@ namespace PetProject.IdentityServer.Application.Services
 
                 await _emailRepository.AddAsync(email);
             }
-            catch (Exception ex)
+            catch
             {
                 await _userRepository.SaveChangeAsync();
 

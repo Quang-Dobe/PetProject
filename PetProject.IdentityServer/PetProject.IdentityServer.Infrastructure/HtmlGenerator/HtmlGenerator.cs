@@ -1,7 +1,7 @@
-﻿using PetProject.IdentityServer.CrossCuttingConcerns.HtmlGenerator;
+﻿using PetProject.IdentityServer.Domain.ThirdPartyServices;
 using RazorLight;
 
-namespace PetProject.IdentityServer.Infrastructure.HtmlGeneratorServices
+namespace PetProject.IdentityServer.Infrastructure.HtmlGeneratorService
 {
     public class HtmlGenerator : IHtmlGenerator
     {
