@@ -37,7 +37,7 @@ namespace PetProject.IdentityServer.WorkerService.WorkerServices
                         var emailSender = scoppe.ServiceProvider.GetRequiredService<IEmailSender>();
                         var emailRepository = scoppe.ServiceProvider.GetRequiredService<IEmailRepository>();
 
-                        var unsentEmails = emailRepository.GetAll().Where(x => x.Status == false).ToList();
+                        var unsentEmails = emailRepository.GetAll().Where(x => x.Status == false && x.RetryCount < x.MaxRetryCount).ToList();
 
                         foreach (var email in unsentEmails)
                         {

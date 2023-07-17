@@ -211,6 +211,7 @@ namespace PetProject.IdentityServer.Application.Services
 
                     // IsLockedOut => Set LockedEndDate + 5 minutes && ResetAccessFailedCount = 0 (But still lockedOut)
                     await _userManager.AccessFailedAsync(user);
+                    await _userRepository.SaveChangeAsync();
                     _logger.LogInformation(string.Format("User {0} login failed!", user.UserName));
 
                     if (await _userManager.IsLockedOutAsync(user))
