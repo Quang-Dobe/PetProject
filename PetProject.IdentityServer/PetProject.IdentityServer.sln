@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.IdentityServer.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.IdentityServer.Presentation", "PetProject.IdentityServer.Presentation\PetProject.IdentityServer.Presentation.csproj", "{E29A9AD2-B5A0-4D74-9CC6-484E50C50E4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.IdentityServer.WorkerService", "PetProject.IdentityServer.WorkerService\PetProject.IdentityServer.WorkerService.csproj", "{EB615C06-2902-4A93-8B22-DC2A6D57DF2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{E29A9AD2-B5A0-4D74-9CC6-484E50C50E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E29A9AD2-B5A0-4D74-9CC6-484E50C50E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E29A9AD2-B5A0-4D74-9CC6-484E50C50E4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB615C06-2902-4A93-8B22-DC2A6D57DF2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB615C06-2902-4A93-8B22-DC2A6D57DF2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB615C06-2902-4A93-8B22-DC2A6D57DF2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB615C06-2902-4A93-8B22-DC2A6D57DF2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
