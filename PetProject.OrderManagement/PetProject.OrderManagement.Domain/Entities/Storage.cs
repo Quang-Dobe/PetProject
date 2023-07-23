@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using PetProject.OrderManagement.Domain.Entities.BaseEntity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PetProject.OrderManagement.Domain.Entities
 {
-    public class Storage
+    public class Storage : AggregateEntity<Guid>
     {
         public string IdCode { get; set; }
 

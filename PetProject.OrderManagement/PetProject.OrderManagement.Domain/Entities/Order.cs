@@ -1,9 +1,10 @@
-﻿using PetProject.OrderManagement.Domain.Enums;
+﻿using PetProject.OrderManagement.Domain.Entities.BaseEntity;
+using PetProject.OrderManagement.Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PetProject.OrderManagement.Domain.Entities
 {
-    public class Order
+    public class Order : AggregateEntity<Guid>
     {
         public string IdCode { get; set; }
 
