@@ -39,9 +39,19 @@ namespace PetProject.OrderManagement.Persistence.Repositories
             _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
         }
     
+        public void SaveChanges()
+        {
+            _dbContext.SaveChanges();
+        }
+
         public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             await _dbContext.AddAsync(entity, cancellationToken);
+        }
+    
+        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }
