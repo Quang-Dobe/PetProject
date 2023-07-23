@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Options;
-using PetProject.OrderManagement.CrossCuttingConcerns.SharedAppSetting;
 using PetProject.OrderManagement.CrossCuttingConcerns.Extensions;
 using PetProject.OrderManagement.Infrastructure.Extensions;
 using PetProject.OrderManagement.Persistence.Extensions;
@@ -15,8 +13,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<AppSettings>(configuration)
-    .AddSingleton(sp => sp.GetRequiredService<IOptions<AppSettings>>().Value);
 builder.Services.AddCrossCuttingConcerns();
 builder.Services.AddPersistence(configuration.GetConnectionString("OrderManagement"), "");
 builder.Services.AddInfrastructure();
