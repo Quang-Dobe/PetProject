@@ -32,7 +32,7 @@ namespace PetProject.IdentityServer.WorkerService.Extensions
                 SmtpPassword = appSettings.Notification.Email.SmtpServerPassword,
             });
 
-            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddHostedService<SendEmailWorker>();
 

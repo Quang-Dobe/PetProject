@@ -1,6 +1,7 @@
 using PetProject.OrderManagement.CrossCuttingConcerns.Extensions;
 using PetProject.OrderManagement.Infrastructure.Extensions;
 using PetProject.OrderManagement.Persistence.Extensions;
+using PetProject.OrderManagement.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -16,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCrossCuttingConcerns();
 builder.Services.AddPersistence(configuration.GetConnectionString("OrderManagement"), "");
 builder.Services.AddInfrastructure();
+builder.Services.AddApplication();
 
 var app = builder.Build();
 

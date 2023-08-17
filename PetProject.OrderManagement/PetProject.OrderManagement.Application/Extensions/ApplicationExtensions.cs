@@ -11,12 +11,12 @@ namespace PetProject.OrderManagement.Application.Extensions
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IBaseService, BaseService>();
-            services = AddServices(services);
+            services.AddServices();
 
             return services;
         }
 
-        public static IServiceCollection AddServices(IServiceCollection services)
+        public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             foreach (var exportedType in Assembly.GetExecutingAssembly().GetExportedTypes())
