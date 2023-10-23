@@ -14,6 +14,8 @@
 
         Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
 
+        Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
+
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

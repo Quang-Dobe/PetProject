@@ -11,6 +11,7 @@ namespace PetProject.OrderManagement.CrossCuttingConcerns.SharedAppSetting
             _configuration = configuration;
             ConnectionStrings = new ConnectionStrings(configuration);
             InternalAPI = new InternalAPI(configuration);
+            ElasticSettings = new ElasticSettings(configuration);
         }
 
         public string AllowedHosts => _configuration["AllowedHosts"];
@@ -18,5 +19,7 @@ namespace PetProject.OrderManagement.CrossCuttingConcerns.SharedAppSetting
         public ConnectionStrings ConnectionStrings { get; set; }
 
         public InternalAPI InternalAPI { get; set; }
+
+        public ElasticSettings ElasticSettings { get; set; }
     }
 }
