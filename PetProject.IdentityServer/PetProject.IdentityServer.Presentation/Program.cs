@@ -2,6 +2,7 @@ using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
 using PetProject.IdentityServer.Infrastructure.Extensions;
 using PetProject.IdentityServer.Persistence.Extensions;
 using PetProject.IdentityServer.Application.Extensions;
+using PetProject.IdentityServer.Presentation.MiddleWare;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -25,6 +26,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCustomMiddleWare();
 
 app.UseHttpsRedirection();
 
