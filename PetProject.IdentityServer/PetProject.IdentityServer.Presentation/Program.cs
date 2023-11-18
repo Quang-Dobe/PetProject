@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCrossCuttingConcerns();
 builder.Services.AddPersistence(configuration.GetConnectionString("Identity"), "");
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(configuration["Caching:RedisURL"]);
 builder.Services.AddApplication();
 
 var app = builder.Build();

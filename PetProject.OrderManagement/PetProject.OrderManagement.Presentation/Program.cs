@@ -14,8 +14,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCrossCuttingConcerns();
 builder.Services.AddPersistence(configuration.GetConnectionString("OrderManagement"), "");
+builder.Services.AddInfrastructure(configuration["Caching:RedisURL"]);
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
