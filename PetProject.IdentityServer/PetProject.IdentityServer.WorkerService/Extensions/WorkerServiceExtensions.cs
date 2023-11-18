@@ -5,6 +5,8 @@ using PetProject.IdentityServer.Infrastructure.EmailSenderService;
 using PetProject.IdentityServer.Persistence.Extensions;
 using PetProject.IdentityServer.CrossCuttingConcerns.Extensions;
 using PetProject.IdentityServer.Infrastructure.Extensions;
+using PetProject.IdentityServer.Domain.ThirdPartyServices.SmsSender;
+using PetProject.IdentityServer.Infrastructure.SmsSender;
 
 namespace PetProject.IdentityServer.WorkerService.Extensions
 {
@@ -14,9 +16,10 @@ namespace PetProject.IdentityServer.WorkerService.Extensions
         {
             services.AddCrossCuttingConcerns();
             services.AddPersistence(appSettings.ConnectionStrings.Identity, "");
-            services.AddInfrastructure();
+            services.AddInfrastructure("");
 
             services.AddSendEmailWorker(appSettings);
+            services.AddSendSmsWorker(appSettings);
 
             return services;
         }
@@ -35,6 +38,21 @@ namespace PetProject.IdentityServer.WorkerService.Extensions
             services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddHostedService<SendEmailWorker>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddSendSmsWorker(this IServiceCollection services, AppSettings.AppSettings appSettings)
+        {
+            services.AddSingleton<SmsSenderConfiguration>(new SmsSenderConfiguration()
+            {
+                ConnectionString = appSettings.Notification.Sms.ConnectionString,
+                FromPhoneNumber = appSettings.Notification.Sms.FromPhoneNumber,
+            });
+
+            services.AddScoped<ISmsSender, SmsSender>();
+
+            services.AddHostedService<SendSmsWorker>();
 
             return services;
         }
