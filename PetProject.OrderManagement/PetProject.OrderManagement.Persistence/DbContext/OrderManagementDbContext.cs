@@ -68,24 +68,37 @@ namespace PetProject.OrderManagement.Persistence
             var aggregateEntities = ChangeTracker.Entries<AggregateEntity<Guid>>();
             AddingDateTimeInformation(abstractEntites);
             AddingDateTimeInformation(aggregateEntities);
+            AddSyncInformation(abstractEntites);
+            AddSyncInformation(aggregateEntities);
         }
 
         private void AddingDateTimeInformation<TEntityType>(IEnumerable<EntityEntry<TEntityType>> entityEntries) where TEntityType : BaseEntity<Guid>
         {
-            foreach (var entity in entityEntries.Where(x => x.State == EntityState.Added || x.State == EntityState.Modified))
+            foreach (var entity in entityEntries.Where(x => x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted))
             {
                 if (entity.State == EntityState.Added)
                 {
                     entity.Entity.CreatedDate = _dateTimeProvider.Now;
-                    entity.Entity.UpdatedDate = _dateTimeProvider.Now;
                     entity.Entity.CreatedDateTimeOffset = _dateTimeProvider.OffsetNow;
-                    entity.Entity.UpdatedDateTimeOffset = _dateTimeProvider.OffsetNow;
                 }
-                else
+                else if (entity.State == EntityState.Modified)
                 {
                     entity.Entity.UpdatedDate = _dateTimeProvider.Now;
                     entity.Entity.UpdatedDateTimeOffset = _dateTimeProvider.OffsetNow;
                 }
+                else
+                {
+                    entity.Entity.DeletedDate = _dateTimeProvider.Now;
+                    entity.Entity.DeletedDateTimeOffset = _dateTimeProvider.OffsetNow;
+                }
+            }
+        }
+
+        private void AddSyncInformation<TEntityType(IEnumerable<EntityEntry<TEntityType>> entityEntries) where TEntityType : BaseEntity<Guid>
+        {
+            foreach (var entity in entityEntries.Where(x => x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted))
+            {
+                entity.Entity.IsSync = false;
             }
         }
 

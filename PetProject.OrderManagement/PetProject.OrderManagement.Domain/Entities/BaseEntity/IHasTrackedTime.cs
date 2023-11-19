@@ -8,8 +8,12 @@ namespace PetProject.OrderManagement.Domain.Entities.BaseEntity
         [Obsolete("Will be migrated to UpdatedDateTimeOffset")]
         DateTime? UpdatedDate { get; set; }
 
+        DateTime? DeletedDate { get; set; }
+
         DateTimeOffset? CreatedDateTimeOffset { get; set; }
 
         DateTimeOffset? UpdatedDateTimeOffset { get; set; }
+
+        DateTimeOffset? DeletedDateTimeOffset { get; set; }
     }
 }

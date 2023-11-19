@@ -1,37 +1,29 @@
 ﻿using Nest;
-using PetProject.OrderManagement.CrossCuttingConcerns.SharedAppSetting;
-using PetProject.OrderManagement.Infrastructure.ElasticsearchServer.DefaultSetting;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using PetProject.OrderManagement.Infrastructure.ElasticsearchServer.DefaultSetting;
 
 namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.Extensions
 {
-    public class ElasticsearchServerSetting
+    public static class ElasticsearchServerExtension
     {
-        private readonly AppSettings _appSettings;
-
-        public ElasticsearchServerSetting(AppSettings appSettings)
+        public static IServiceCollection AddElasticsearchServer(this IServiceCollection services)
         {
-            _appSettings = appSettings;
-        }
+            var config = new ElasticSearchConfiguration();
 
-        public void SetupElasticsearchServer()
-        {
-            var baseUrl = _appSettings.ElasticSettings.BaseUrl;
-            var userName = _appSettings.ElasticSettings.UserName;
-            var password = _appSettings.ElasticSettings.Password;
-            var certificate = _appSettings.ElasticSettings.Certificate;
-            var index = _appSettings.ElasticSettings.DefaultIndex;
-
-            var settings = new ConnectionSettings(new Uri(baseUrl ?? ""))
-                .CertificateFingerprint(certificate).BasicAuthentication(userName, password)
-                .EnableApiVersioningHeader().DefaultIndex(index);
+            var settings = new ConnectionSettings(new Uri(config.BaseUrl ?? ""))
+                .CertificateFingerprint(config.Certificate).BasicAuthentication(config.UserName, config.Password)
+                .EnableApiVersioningHeader().DefaultIndex(config.DefaultIndex);
 
             AddDefaultMapping(settings);
             var client = new ElasticClient(settings);
-            AddIndex(client, index);
+            services.AddSingleton<IElasticClient>(client);
+            AddIndex(client, config.DefaultIndex);
+
+            return services;
         }
 
-        private void AddDefaultMapping(ConnectionSettings settings)
+        private static void AddDefaultMapping(ConnectionSettings settings)
         {
             foreach (var exportedType in Assembly.GetExecutingAssembly().GetExportedTypes())
             {
@@ -53,7 +45,7 @@ namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.Extensio
             }
         }
 
-        private void AddIndex(IElasticClient client, string indexName)
+        private static void AddIndex(IElasticClient client, string indexName)
         {
             foreach (var exportedType in Assembly.GetExecutingAssembly().GetExportedTypes())
             {

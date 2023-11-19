@@ -6,5 +6,7 @@ namespace PetProject.OrderManagement.Domain.Entities.BaseEntity
     {
         [Timestamp]
         byte[] Version { get; set; }
+
+        bool IsSync { get; set; }
     }
 }

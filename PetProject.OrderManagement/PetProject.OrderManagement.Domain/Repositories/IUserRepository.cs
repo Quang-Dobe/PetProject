@@ -1,6 +1,7 @@
-﻿namespace PetProject.OrderManagement.Domain.Repositories
+﻿using PetProject.OrderManagement.Domain.Entities;
+
+namespace PetProject.OrderManagement.Domain.Repositories
 {
-    public interface IUserRepository
-    {
-    }
+    public interface IUserRepository : IBaseRepository<User>
+    { }
 }

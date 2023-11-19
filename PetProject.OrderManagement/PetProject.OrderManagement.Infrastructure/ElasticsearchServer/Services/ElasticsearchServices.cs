@@ -1,37 +1,55 @@
-﻿using Nest;
-using PetProject.OrderManagement.CrossCuttingConcerns.SharedAppSetting;
-using PetProject.OrderManagement.Domain.Entities.BaseEntity;
-using PetProject.OrderManagement.Domain.Services.BaseService;
-
-namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.Services
+﻿namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.Services
 {
-    public class ElasticsearchServices : IExternalRepoService
+    public class ElasticSearchServices : IElasticSearchServices
     {
-        private readonly ElasticClient _client;
-
-        public ElasticsearchServices(AppSettings appSettings, ElasticClient client)
+        public bool Create<T>(T data)
         {
-            _client = client;
+            throw new NotImplementedException();
         }
 
-        public Task GenerateData<T>(T data) where T : BaseEntity<Guid>
+        public bool Read<T>(T data)
         {
-            return Task.FromResult(_client.IndexDocumentAsync<T>(data));
+            throw new NotImplementedException();
         }
 
-        public Task DeleteData<T>(T data) where T : BaseEntity<Guid>
+        public bool Update<T>(T data)
         {
-            return Task.FromResult(_client.DeleteAsync<T>(data));
+            throw new NotImplementedException();
         }
 
-        public Task BulkGenerateData<T>(IEnumerable<T> data) where T : BaseEntity<Guid>
+        public bool Delete<T>(T data)
         {
-            return Task.FromResult(_client.IndexManyAsync<T>(data));
+            throw new NotImplementedException();
         }
 
-        public Task BulkDeleteData<T>(IEnumerable<T> data) where T: BaseEntity<Guid>
+        public bool CheckExist<T>(T data)
         {
-            return Task.FromResult(_client.DeleteManyAsync<T>(data));
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> CreateAsync<T>(T data, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> ReadAsync<T>(T data, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> UpdateAsync<T>(T data, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeleteAsync<T>(T data, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> CheckExistAsync<T>(T data, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
         }
     }
 }

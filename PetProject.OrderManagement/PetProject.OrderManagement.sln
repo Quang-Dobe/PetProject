@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.33711.374
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.OrderManagement.Presentation", "PetProject.OrderManagement.Presentation\PetProject.OrderManagement.Presentation.csproj", "{74CC2765-1084-4F1B-A27C-DF657E1CDC9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.OrderManagement.Presentation", "PetProject.OrderManagement.Presentation\PetProject.OrderManagement.Presentation.csproj", "{74CC2765-1084-4F1B-A27C-DF657E1CDC9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.OrderManagement.Domain", "PetProject.OrderManagement.Domain\PetProject.OrderManagement.Domain.csproj", "{E09EC14E-7C3F-4DC9-B6DD-3158E8A7E2CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.OrderManagement.Domain", "PetProject.OrderManagement.Domain\PetProject.OrderManagement.Domain.csproj", "{E09EC14E-7C3F-4DC9-B6DD-3158E8A7E2CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.OrderManagement.Application", "PetProject.OrderManagement.Application\PetProject.OrderManagement.Application.csproj", "{912D1919-60B5-44AD-9A5A-BAB97B7135F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.OrderManagement.Application", "PetProject.OrderManagement.Application\PetProject.OrderManagement.Application.csproj", "{912D1919-60B5-44AD-9A5A-BAB97B7135F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.OrderManagement.Persistence", "PetProject.OrderManagement.Persistence\PetProject.OrderManagement.Persistence.csproj", "{1D27CD0F-E96B-44F0-BF65-DAB1FFF2B545}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.OrderManagement.Persistence", "PetProject.OrderManagement.Persistence\PetProject.OrderManagement.Persistence.csproj", "{1D27CD0F-E96B-44F0-BF65-DAB1FFF2B545}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.OrderManagement.CrossCuttingConcerns", "PetProject.OrderManagement.CrossCuttingConcerns\PetProject.OrderManagement.CrossCuttingConcerns.csproj", "{4F79C14C-0167-454C-A099-B2FD5983B87A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.OrderManagement.CrossCuttingConcerns", "PetProject.OrderManagement.CrossCuttingConcerns\PetProject.OrderManagement.CrossCuttingConcerns.csproj", "{4F79C14C-0167-454C-A099-B2FD5983B87A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.OrderManagement.Infrastructure", "PetProject.OrderManagement.Infrastructure\PetProject.OrderManagement.Infrastructure.csproj", "{CEB155AF-524F-410B-BC88-E943F1CEA833}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.OrderManagement.Infrastructure", "PetProject.OrderManagement.Infrastructure\PetProject.OrderManagement.Infrastructure.csproj", "{CEB155AF-524F-410B-BC88-E943F1CEA833}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.OrderManagement.WorkerService", "PetProject.OrderManagement.WorkerService\PetProject.OrderManagement.WorkerService.csproj", "{1E4C15A7-557E-4D0E-A401-CABD5033A8DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{CEB155AF-524F-410B-BC88-E943F1CEA833}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEB155AF-524F-410B-BC88-E943F1CEA833}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEB155AF-524F-410B-BC88-E943F1CEA833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E4C15A7-557E-4D0E-A401-CABD5033A8DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E4C15A7-557E-4D0E-A401-CABD5033A8DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E4C15A7-557E-4D0E-A401-CABD5033A8DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E4C15A7-557E-4D0E-A401-CABD5033A8DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
