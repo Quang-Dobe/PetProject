@@ -1,25 +1,27 @@
-﻿namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.Services
+﻿using PetProject.OrderManagement.Domain.Entities.BaseEntity;
+
+namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.Services
 {
     public interface IElasticSearchServices
     {
-        bool Read<T>(T data);
+        IEnumerable<T?> Search<T>(T data, SearchOptions? options) where T : BaseEntity<Guid>;
 
-        bool Create<T>(T data);
+        bool Create<T>(T data) where T : BaseEntity<Guid>;
 
-        bool Update<T>(T data);
+        bool Update<T>(T data) where T : BaseEntity<Guid>;
 
-        bool Delete<T>(T data);
+        bool Delete<T>(T data) where T : BaseEntity<Guid>;
 
-        bool CheckExist<T>(T data);
+        bool CheckExist<T>(T data) where T : BaseEntity<Guid>;
 
-        Task<bool> CreateAsync<T>(T data, CancellationToken cancellationToken = default);
+        Task<IEnumerable<T?>> SearchAsync<T>(T data, SearchOptions? options, CancellationToken cancellationToken = default) where T : BaseEntity<Guid>;
 
-        Task<bool> ReadAsync<T>(T data, CancellationToken cancellationToken = default);
+        Task<bool> CreateAsync<T>(T data, CancellationToken cancellationToken = default) where T : BaseEntity<Guid>;
 
-        Task<bool> UpdateAsync<T>(T data, CancellationToken cancellationToken = default);
+        Task<bool> UpdateAsync<T>(T data, CancellationToken cancellationToken = default) where T : BaseEntity<Guid>;
 
-        Task<bool> DeleteAsync<T>(T data, CancellationToken cancellationToken = default);
+        Task<bool> DeleteAsync<T>(T data, CancellationToken cancellationToken = default) where T : BaseEntity<Guid>;
 
-        Task<bool> CheckExistAsync<T>(T data, CancellationToken cancellationToken = default);
+        Task<bool> CheckExistAsync<T>(T data, CancellationToken cancellationToken = default) where T : BaseEntity<Guid>;
     }
 }

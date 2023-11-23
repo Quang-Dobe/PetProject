@@ -10,15 +10,8 @@ namespace PetProject.OrderManagement.Infrastructure.Extensions
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, string cachingConnectionString)
         {
-            //services.AddElasticSearchServer();
             services.AddCaching(cachingConnectionString);
 
-            return services;
-        }
-
-        public static IServiceCollection AddElasticSearchServer(this IServiceCollection services)
-        {
-            services.AddSingleton<IExternalRepoService, ElasticsearchServices>();
             return services;
         }
 
