@@ -56,24 +56,18 @@ namespace PetProject.OrderManagement.WorkerService.WorkerServices
 
                             foreach (var data in unsentSyncData)
                             {
-                                var isExist = await elasticSearchServices.CheckExistAsync(data);
+                                var isExist = await elasticSearchServices.CheckExistAsync(data, stoppingToken);
                                 if (!isExist)
                                 {
-                                    await elasticSearchServices.CreateAsync(data);
+                                    await elasticSearchServices.CreateAsync(data, stoppingToken);
                                 }
-                                else
+                                else if (isExist && !data.RowDeleted)
                                 {
-                                    // Need to update this...
-                                    var updatedSuccessfully = await elasticSearchServices.UpdateAsync(data);
-
-                                    if (updatedSuccessfully)
-                                    {
-                                        data.IsSync = true;
-                                    }
-                                    else
-                                    {
-                                        data.IsSync = false;
-                                    }
+                                    data.IsSync = await elasticSearchServices.UpdateAsync(data, stoppingToken);
+                                }
+                                else if (isExist && data.RowDeleted)
+                                {
+                                    data.IsSync = await elasticSearchServices.DeleteAsync(data, stoppingToken);
                                 }
                             }
 

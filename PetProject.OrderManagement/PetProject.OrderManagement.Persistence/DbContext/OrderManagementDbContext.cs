@@ -94,7 +94,7 @@ namespace PetProject.OrderManagement.Persistence
             }
         }
 
-        private void AddSyncInformation<TEntityType(IEnumerable<EntityEntry<TEntityType>> entityEntries) where TEntityType : BaseEntity<Guid>
+        private void AddSyncInformation<TEntityType>(IEnumerable<EntityEntry<TEntityType>> entityEntries) where TEntityType : BaseEntity<Guid>
         {
             foreach (var entity in entityEntries.Where(x => x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted))
             {

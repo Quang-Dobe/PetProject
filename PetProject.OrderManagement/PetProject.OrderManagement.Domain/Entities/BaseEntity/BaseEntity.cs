@@ -11,6 +11,8 @@ namespace PetProject.OrderManagement.Domain.Entities.BaseEntity
 
         public virtual bool IsSync { get; set; }
 
+        public virtual bool RowDeleted { get; set; }
+
         public virtual DateTime? CreatedDate { get; set; }
 
         public virtual DateTime? UpdatedDate { get; set; }

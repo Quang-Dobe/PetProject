@@ -8,5 +8,7 @@ namespace PetProject.OrderManagement.Domain.Entities.BaseEntity
         byte[] Version { get; set; }
 
         bool IsSync { get; set; }
+
+        bool RowDeleted { get; set; }
     }
 }
