@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.BulkDelete;
-using PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.BulkInsert;
-using PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.BulkMerge;
-using PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.BulkUpdate;
-using PetProject.OrderManagement.Infrastructure.SqlServer.Extensions;
+using PetProject.OrderManagement.Persistence.SqlServer.BulkAction_V1.BulkDelete;
+using PetProject.OrderManagement.Persistence.SqlServer.BulkAction_V1.BulkInsert;
+using PetProject.OrderManagement.Persistence.SqlServer.BulkAction_V1.BulkMerge;
+using PetProject.OrderManagement.Persistence.SqlServer.BulkAction_V1.BulkUpdate;
+using PetProject.OrderManagement.Persistence.SqlServer.Extensions;
 
-namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1
+namespace PetProject.OrderManagement.Persistence.SqlServer.BulkAction_V1
 {
     public static class BulkAction
     {
-        public static void BulkInsert<T>(this DbContext dbContext, IEnumerable<T> data, IEnumerable<string> columnNames, Action<BulkOptions>? action)
+        public static void BulkInsert<T, TDbContext>(this TDbContext dbContext, IEnumerable<T> data, IEnumerable<string> columnNames, Action<BulkOptions>? action) where TDbContext : DbContext
         {
             var connection = dbContext.GetCurrentConnection();
             var transaction = dbContext.GetCurrentTransaction();
@@ -28,7 +28,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1
                 .Excute();
         }
 
-        public static void BulkUpdate<T>(this DbContext dbContext, IEnumerable<T> data, IEnumerable<string> columnNames, Action<BulkOptions>? action)
+        public static void BulkUpdate<T, TDbContext>(this TDbContext dbContext, IEnumerable<T> data, IEnumerable<string> columnNames, Action<BulkOptions>? action) where TDbContext : DbContext
         {
             var connection = dbContext.GetCurrentConnection();
             var transaction = dbContext.GetCurrentTransaction();
@@ -47,7 +47,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1
                 .Excute();
         }
 
-        public static void BulkDelete<T>(this DbContext dbContext, IEnumerable<T> data, IEnumerable<string> columnNames, Action<BulkOptions>? action)
+        public static void BulkDelete<T, TDbContext>(this TDbContext dbContext, IEnumerable<T> data, IEnumerable<string> columnNames, Action<BulkOptions>? action) where TDbContext : DbContext
         {
             var connection = dbContext.GetCurrentConnection();
             var transaction = dbContext.GetCurrentTransaction();
@@ -66,7 +66,7 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1
                 .Excute();
         }
 
-        public static void BulkMerge<T>(this DbContext dbContext, IEnumerable<T> data, IEnumerable<string> columnNames, Action<BulkOptions>? action)
+        public static void BulkMerge<T, TDbContext>(this TDbContext dbContext, IEnumerable<T> data, IEnumerable<string> columnNames, Action<BulkOptions>? action) where TDbContext : DbContext
         {
             var connection = dbContext.GetCurrentConnection();
             var transaction = dbContext.GetCurrentTransaction();

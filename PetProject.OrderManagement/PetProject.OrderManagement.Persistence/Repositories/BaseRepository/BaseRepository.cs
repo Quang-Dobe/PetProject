@@ -2,6 +2,7 @@
 using PetProject.OrderManagement.Domain.Entities.BaseEntity;
 using PetProject.OrderManagement.Domain.Repositories;
 using PetProject.OrderManagement.Domain.Services.BaseService;
+using PetProject.OrderManagement.Domain.ThirdPartyServices.BulkActions;
 
 namespace PetProject.OrderManagement.Persistence.Repositories
 {
@@ -14,11 +15,14 @@ namespace PetProject.OrderManagement.Persistence.Repositories
 
         private readonly IExternalRepoService _externalRepository;
 
-        public BaseRepository(OrderManagementDbContext dbContext, IDateTimeProvider dateTimeProvider, IExternalRepoService externalRepository)
+        private readonly IBulkActions _bulkActions;
+
+        public BaseRepository(OrderManagementDbContext dbContext, IDateTimeProvider dateTimeProvider, IExternalRepoService externalRepository, IBulkActions bulkActions)
         {
             _dbContext = dbContext;
             _dateTimeProvider = dateTimeProvider;
             _externalRepository = externalRepository;
+            _bulkActions = bulkActions;
         }
 
         public IQueryable<TEntity> GetAll()
@@ -46,6 +50,26 @@ namespace PetProject.OrderManagement.Persistence.Repositories
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
+        }
+
+        public void BulkInsert(IEnumerable<TEntity> data, IEnumerable<string> columnNames)
+        {
+            _bulkActions.BulkInsert(data, columnNames);
+        }
+
+        public void BulkUpdate(IEnumerable<TEntity> data, IEnumerable<string> columnNames)
+        {
+            _bulkActions.BulkUpdate(data, columnNames);
+        }
+
+        public void BulkMerge(IEnumerable<TEntity> data, IEnumerable<string> columnNames)
+        {
+            _bulkActions.BulkMerge(data, columnNames);
+        }
+
+        public void BulkDelete(IEnumerable<TEntity> data, IEnumerable<string> columnNames)
+        {
+            _bulkActions.BulkDelete(data, columnNames);
         }
 
         public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)

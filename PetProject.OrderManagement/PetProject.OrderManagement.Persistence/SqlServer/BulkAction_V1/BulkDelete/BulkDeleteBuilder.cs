@@ -1,9 +1,9 @@
 using System.Data;
 using System.Text;
 using PetProject.OrderManagement.CrossCuttingConcerns.Extensions;
-using PetProject.OrderManagement.Infrastructure.SqlServer.Extensions;
+using PetProject.OrderManagement.Persistence.SqlServer.Extensions;
 
-namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.BulkDelete
+namespace PetProject.OrderManagement.Persistence.SqlServer.BulkAction_V1.BulkDelete
 {
     public class BulkDeleteBuilder<T> : BulkBase<T>
     {

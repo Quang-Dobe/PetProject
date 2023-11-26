@@ -2,11 +2,12 @@
 using PetProject.OrderManagement.Domain.Entities;
 using PetProject.OrderManagement.Domain.Repositories;
 using PetProject.OrderManagement.Domain.Services.BaseService;
+using PetProject.OrderManagement.Domain.ThirdPartyServices.BulkActions;
 
 namespace PetProject.OrderManagement.Persistence.Repositories
 {
     public class PortRepository : BaseRepository<Port>, IPortRepository
     {
-        public PortRepository(OrderManagementDbContext dbContext, IDateTimeProvider dateTimeProvider, IExternalRepoService externalRepoService) : base(dbContext, dateTimeProvider, externalRepoService) { }
+        public PortRepository(OrderManagementDbContext dbContext, IDateTimeProvider dateTimeProvider, IExternalRepoService externalRepoService, IBulkActions bulkActions) : base(dbContext, dateTimeProvider, externalRepoService, bulkActions) { }
     }
 }

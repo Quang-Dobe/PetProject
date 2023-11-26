@@ -1,7 +1,7 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1
+namespace PetProject.OrderManagement.Persistence.SqlServer.BulkAction_V1
 {
     public abstract class BulkBase<T>
     {

@@ -1,9 +1,8 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace PetProject.OrderManagement.Infrastructure.SqlServer.Extensions
+namespace PetProject.OrderManagement.Persistence.SqlServer.Extensions
 {
     public static class DbContextExtensions
     {

@@ -1,4 +1,4 @@
-namespace PetProject.OrderManagement.Infrastructure.Constants
+namespace PetProject.OrderManagement.Persistence.Constants
 {
     public static class Constants
     {

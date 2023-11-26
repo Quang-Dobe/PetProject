@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PetProject.OrderManagement.Domain.Services.BaseService;
 using PetProject.OrderManagement.Domain.ThirdPartyServices.Caching;
 using PetProject.OrderManagement.Infrastructure.CachingService;
-using PetProject.OrderManagement.Infrastructure.ElasticsearchServer.Services;
 
 namespace PetProject.OrderManagement.Infrastructure.Extensions
 {

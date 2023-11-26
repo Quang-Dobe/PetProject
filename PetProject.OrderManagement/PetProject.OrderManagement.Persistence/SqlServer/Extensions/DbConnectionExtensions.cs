@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace PetProject.OrderManagement.Infrastructure.SqlServer.Extensions
+namespace PetProject.OrderManagement.Persistence.SqlServer.Extensions
 {
     public static class DbConnectionExtensions
     {

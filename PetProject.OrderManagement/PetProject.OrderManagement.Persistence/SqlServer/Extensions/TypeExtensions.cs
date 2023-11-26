@@ -1,4 +1,4 @@
-﻿namespace PetProject.OrderManagement.Infrastructure.SqlServer.Extensions
+﻿namespace PetProject.OrderManagement.Persistence.SqlServer.Extensions
 {
     public static class TypeExtensions
     {

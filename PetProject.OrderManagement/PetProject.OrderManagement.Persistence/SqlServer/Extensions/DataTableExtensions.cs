@@ -1,8 +1,7 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 using System.Text;
 
-namespace PetProject.OrderManagement.Infrastructure.SqlServer.Extensions
+namespace PetProject.OrderManagement.Persistence.SqlServer.Extensions
 {
     public static class DataTableExtensions
     {

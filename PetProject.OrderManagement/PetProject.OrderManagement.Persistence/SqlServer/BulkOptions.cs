@@ -1,4 +1,4 @@
-﻿namespace PetProject.OrderManagement.Infrastructure.SqlServer
+﻿namespace PetProject.OrderManagement.Persistence.SqlServer
 {
     public class BulkOptions
     {

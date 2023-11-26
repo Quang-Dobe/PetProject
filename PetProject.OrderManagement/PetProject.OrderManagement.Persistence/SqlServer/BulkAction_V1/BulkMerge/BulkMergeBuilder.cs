@@ -1,25 +1,25 @@
 using System.Data;
 using System.Text;
 using PetProject.OrderManagement.CrossCuttingConcerns.Extensions;
-using PetProject.OrderManagement.Infrastructure.SqlServer.Extensions;
+using PetProject.OrderManagement.Persistence.SqlServer.Extensions;
 
-namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.BulkUpdate
+namespace PetProject.OrderManagement.Persistence.SqlServer.BulkAction_V1.BulkMerge
 {
-    public class BulkUpdateBuilder<T> : BulkBase<T>
+    public class BulkMergeBuilder<T> : BulkBase<T>
     {
         #region Constructor
 
-        public BulkUpdateBuilder(IDbConnection connection)
+        public BulkMergeBuilder(IDbConnection connection)
         {
             _connection = connection;
         }
 
-        public BulkUpdateBuilder(IDbTransaction transaction)
+        public BulkMergeBuilder(IDbTransaction transaction)
         {
             _transaction = transaction;
         }
 
-        public BulkUpdateBuilder(IDbConnection connection, IDbTransaction transaction = null)
+        public BulkMergeBuilder(IDbConnection connection, IDbTransaction transaction = null)
         {
             _connection = connection;
             _transaction = transaction;
@@ -33,24 +33,16 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
 
             var existedColumns = new List<string>();
             var dataTableColumns = new List<string>();
-            dataTableColumns.AddRange(_columnNames);
             dataTableColumns.AddRange(_idColumns);
+            dataTableColumns.AddRange(_columnNames);
 
             var dataTable = _data.ToDataTable(dataTableColumns);
             var sqlQueryCreatingTempTable = dataTable.ToSqlQueryCreatingTable(tempTableName);
             var sqlQueryGetColumnsOfCurrentTable = GenerateSqlQueryGetColumnsOfCurrentTable();
 
-            // WorkFlow:
-            // + Open connection to database and Keep connection
-            // + Create TempTable
-            // + Insert data to TempTable
-            // + Update ExistedTable
-
-            _connection.EnsureOpen();
-            
-            using (var createTempTableCommand = _connection.CreateTextCommand(_transaction, sqlQueryCreatingTempTable))
+            using(var createTempTable = _connection.CreateTextCommand(_transaction, sqlQueryCreatingTempTable))
             {
-                createTempTableCommand.ExecuteNonQuery();
+                createTempTable.ExecuteNonQuery();
             }
 
             GenerateDataForTempTable(dataTable, tempTableName, _dbColumnMappings, _connection, _transaction, _options);
@@ -66,11 +58,11 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
                 }
             }
 
-            var sqlQueryUpdatingExitsedTable = GenerateSqlQueryUpdatingExistedTable(tempTableName, existedColumns);
-
-            using (var updateExistedTableCommand = _connection.CreateTextCommand(_transaction, sqlQueryUpdatingExitsedTable))
+            var sqlQueryInsertOrUpdateExistedTable = GenerateSqlQueryInsertOrUpdateExistedTable(tempTableName, existedColumns);
+            
+            using(var insertOrUpdateExistedTable = _connection.CreateTextCommand(_transaction, sqlQueryInsertOrUpdateExistedTable))
             {
-                updateExistedTableCommand.ExecuteNonQuery();
+                insertOrUpdateExistedTable.ExecuteNonQuery();
             }
         }
 
@@ -84,31 +76,47 @@ namespace PetProject.OrderManagement.Infrastructure.SqlServer.BulkAction_V1.Bulk
             return sqlQuery.ToString();
         }
 
-        private string GenerateSqlQueryUpdatingExistedTable(string tempTableName, IEnumerable<string> columns)
+        private string GenerateSqlQueryInsertOrUpdateExistedTable(string tempTableName, IEnumerable<string> columns)
         {
             var sqlQuery = new StringBuilder();
+
             var existedIdColumns = _idColumns.Where(x => columns.Contains(x));
             var existedColumnNames = _columnNames.Where(x => columns.Contains(x));
 
-            // Generate join conditions
-            var joinCondition = string.Join(" and ", existedIdColumns.Select(x =>
+            // Generate join condition
+            var joinCondition = string.Join(" and ", existedIdColumns.Select(x => 
             {
                 var columnName = GetDbColumnName(x);
 
-                return $"a.[{columnName}] = b.[{x}]";
+                return $"a.[{columnName}]=b.[{columnName}]";
             }));
 
-            // Generate set statements
-            var setStatement = string.Join(", ", existedColumnNames.Select(x =>
+            // Generate insert statement
+            var insertStatementFrom = string.Join(", ", existedColumnNames.Select(x => 
             {
                 var columnName = GetDbColumnName(x);
 
-                return $"a.[{columnName}] = b.[{columnName}]";
+                return $"a.[{columnName}]";
+            }));
+            var insertedColumnsTo = string.Join(", ", existedColumnNames.Select(x => GetDbColumnName(x)));
+
+            // Generate update statement
+            var updateStatement = string.Join(", ", existedColumnNames.Select(x =>
+            {
+                var columnName = GetDbColumnName(x);
+
+                return $"{columnName}=a.[{columnName}]";
             }));
 
-            sqlQuery.AppendLine("UPDATE a");
-            sqlQuery.AppendLine($"SET {setStatement}");
-            sqlQuery.AppendLine($"FROM [{_tableNamePrefix}][{_tableName}] a JOIN {tempTableName} b ON " + joinCondition);
+            // Generate merge statement
+            var mergeStatement = 
+            sqlQuery.AppendLine($"MERGE [{_tableNamePrefix}][{_tableName}] AS b");
+            sqlQuery.AppendLine($"USING {tempTableName} AS a");
+            sqlQuery.AppendLine($"ON {joinCondition}");
+            sqlQuery.AppendLine($"WHEN NOT MATCHED BY TARGET THEN");
+            sqlQuery.AppendLine($"INSERT ({insertedColumnsTo}) VALUES ({insertStatementFrom})");
+            sqlQuery.AppendLine($"WHEN MATCHED BY TARGET THEN");
+            sqlQuery.AppendLine($"UPDATE SET {updateStatement};");
 
             return sqlQuery.ToString();
         }
