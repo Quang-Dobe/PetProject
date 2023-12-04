@@ -1,15 +1,23 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace PetProject.IdentityServer.Presentation.MiddleWare
 {
     public class GlobalExceptionMiddleware
     {
-        public async Task InvokeAsync(HttpContext context, Func<Task> next)
+        private readonly RequestDelegate _next;
+
+        public GlobalExceptionMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-                await next();
+                await _next(context);
             }
             catch (Exception ex)
             {
