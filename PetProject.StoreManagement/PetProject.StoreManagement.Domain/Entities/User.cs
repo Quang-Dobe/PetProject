@@ -1,4 +1,5 @@
 ﻿using PetProject.StoreManagement.Domain.Entities.BaseEntity;
+using PetProject.StoreManagement.Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PetProject.StoreManagement.Domain.Entities

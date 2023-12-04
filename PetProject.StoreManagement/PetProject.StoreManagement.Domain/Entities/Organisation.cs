@@ -1,5 +1,4 @@
 ﻿using PetProject.StoreManagement.Domain.Entities.BaseEntity;
-using System.ComponentModel;
 
 namespace PetProject.StoreManagement.Domain.Entities
 {
@@ -12,8 +11,6 @@ namespace PetProject.StoreManagement.Domain.Entities
         public string? Address { get; set; }
 
         public string Country { get; set; }
-
-        public IEnumerable<Container>? Containers { get; set; }
 
         public IEnumerable<User>? Users { get; set; }
 
