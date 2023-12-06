@@ -1,6 +1,11 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using PetProject.StoreManagement.Application.Common.Queries;
+using PetProject.StoreManagement.Application.Organisation.Commands.AddOrganisation;
+using PetProject.StoreManagement.CrossCuttingConcerns.OS;
 using PetProject.StoreManagement.Domain.ThirdPartyServices.DbConnectionClient;
+using System.Diagnostics;
 
 namespace PetProject.StoreManagement.Application.Organisation.Queries.GetAllOrganisations
 {
@@ -8,42 +13,88 @@ namespace PetProject.StoreManagement.Application.Organisation.Queries.GetAllOrga
     {
         private readonly IDbConnectionClient _connectionClient;
 
-        public GetAllOrganisationsHandler(IDbConnectionClient dbConnectionClient)
+        private readonly IDateTimeProvider _dateTimeProvider;
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        private readonly ILogger<UpdateOrganisationHandler> _logger;
+
+        private Stopwatch _stopwatch;
+
+        public GetAllOrganisationsHandler(
+            IDbConnectionClient dbConnectionClient,
+            IDateTimeProvider dateTimeProvider,
+            IHttpContextAccessor httpContextAccessor,
+            ILogger<UpdateOrganisationHandler> logger)
         {
             _connectionClient = dbConnectionClient;
+            _dateTimeProvider = dateTimeProvider;
+            _httpContextAccessor = httpContextAccessor;
+            _logger = logger;
         }
 
         public async Task<AllOrganisationsDto> Handle(GetAllOrganisationsRequest request, CancellationToken cancellationToken)
         {
-            var result = new AllOrganisationsDto();
+            _stopwatch = Stopwatch.StartNew();
+            var ipAddress = GetIpAddress();
 
-            using (var connection = _connectionClient.GetDbConnection())
+            try
             {
-                var sql = "SELECT " +
-                          "[Organisation].[Id], " +
-                          "[Organisation].[IdCode], " +
-                          "[Organisation].[OrganisationName], " +
-                          "[User].[Id] AS [UserId], " +
-                          "[User].[Name] AS [UserName] " +
-                          "FROM dbo.Organisation AS [Organisation] " +
-                          "INNER JOIN dbo.User AS [User] ON [Organisation].Id = [User].OrganisationId";
+                var result = new AllOrganisationsDto();
 
-                var resultQuery = await connection.QueryAsync(sql);
-
-                result.Organisations = resultQuery.GroupBy(x => (Guid)x.Id).Select(x => new OrganisationDto
+                using (var connection = _connectionClient.GetDbConnection())
                 {
-                    Id = x.Key,
-                    IdCode = x.FirstOrDefault().IdCode,
-                    OrganisationName = x.FirstOrDefault().OrganisationName,
-                    User = x.Select(y => new UserDto
-                    {
-                        Id = y.UserId,
-                        Name = y.UserName,
-                    })
-                });
-            }
+                    var sql = "SELECT " +
+                              "[Organisation].[Id], " +
+                              "[Organisation].[IdCode], " +
+                              "[Organisation].[OrganisationName], " +
+                              "[User].[Id] AS [UserId], " +
+                              "[User].[Name] AS [UserName] " +
+                              "FROM dbo.Organisation AS [Organisation] " +
+                              "INNER JOIN dbo.User AS [User] ON [Organisation].Id = [User].OrganisationId";
 
-            return result;
+                    var resultQuery = await connection.QueryAsync(sql);
+
+                    result.Organisations = resultQuery.GroupBy(x => (Guid)x.Id).Select(x => new OrganisationDto
+                    {
+                        Id = x.Key,
+                        IdCode = x.FirstOrDefault().IdCode,
+                        OrganisationName = x.FirstOrDefault().OrganisationName,
+                        User = x.Select(y => new UserDto
+                        {
+                            Id = y.UserId,
+                            Name = y.UserName,
+                        })
+                    });
+                }
+
+                _stopwatch.Stop();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogTrace("", "", ipAddress, $"[Organisation - GetAllOrganisations] {ex.Message}");
+                throw new Exception(ex.Message);
+            }
         }
+
+        #region Private Methods
+
+        private string GetIpAddress()
+        {
+            var remoteIpAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress;
+
+            return remoteIpAddress != null ? remoteIpAddress.ToString() : "";
+        }
+
+        private void LogTrace(string? userName, string? clientId, string? ipAddress, string? message)
+        {
+            _stopwatch.Stop();
+            _logger.LogInformation(string.Format(" At {0}. Time spent {1} ", _dateTimeProvider.Now, _stopwatch.Elapsed));
+            _logger.LogInformation(string.Format(" UserName: {0} - ClientID: {1} - IpAddress: {2} ", userName, clientId, ipAddress));
+            _logger.LogInformation(string.Format(" Message: {0} ", message));
+        }
+
+        #endregion
     }
 }
