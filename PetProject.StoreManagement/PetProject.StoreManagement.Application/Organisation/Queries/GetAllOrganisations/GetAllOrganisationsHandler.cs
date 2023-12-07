@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using PetProject.StoreManagement.Application.Common.Queries;
-using PetProject.StoreManagement.Application.Organisation.Commands.AddOrganisation;
 using PetProject.StoreManagement.CrossCuttingConcerns.OS;
 using PetProject.StoreManagement.Domain.ThirdPartyServices.DbConnectionClient;
 using System.Diagnostics;
@@ -17,7 +16,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Queries.GetAllOrga
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private readonly ILogger<UpdateOrganisationHandler> _logger;
+        private readonly ILogger<GetAllOrganisationsHandler> _logger;
 
         private Stopwatch _stopwatch;
 
@@ -25,7 +24,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Queries.GetAllOrga
             IDbConnectionClient dbConnectionClient,
             IDateTimeProvider dateTimeProvider,
             IHttpContextAccessor httpContextAccessor,
-            ILogger<UpdateOrganisationHandler> logger)
+            ILogger<GetAllOrganisationsHandler> logger)
         {
             _connectionClient = dbConnectionClient;
             _dateTimeProvider = dateTimeProvider;

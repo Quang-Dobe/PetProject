@@ -45,7 +45,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Commands.DeleteOrg
                 if (data == null || (data.Id == null && data.IdCode.IsNullOrEmpty()))
                 {
                     LogTrace("", "", ipAddress, $"[Organisation - DeleteOrganisationHandler] Invalid Organisation");
-                    return false;
+                    throw new HttpRequestException("Invalid Organisation");
                 }
 
                 var entity = _organisationRepository.GetAll().Where(x => x.Id == data.Id || x.IdCode == data.IdCode).FirstOrDefault();
@@ -53,7 +53,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Commands.DeleteOrg
                 if (entity == null)
                 {
                     LogTrace("", "", ipAddress, $"[Organisation - DeleteOrganisationHandler] Not exist Organisation with ID ({data.Id})");
-                    return false;
+                    throw new HttpRequestException($"Not exist Organisation with ID ({data.Id})");
                 }
                 else
                 {

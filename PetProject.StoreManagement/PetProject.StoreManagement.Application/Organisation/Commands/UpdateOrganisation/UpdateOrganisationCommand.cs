@@ -4,30 +4,26 @@ namespace PetProject.StoreManagement.Application.Organisation.Commands.UpdateOrg
 {
     public class UpdateOrganisationCommand : ICommand<OrganisationDto>
     {
+        public Guid Id { get; set; }
+
         public string IdCode { get; set; }
 
         public string OrganisationName { get; set; }
 
-        public string? Address { get; set; }
-
-        public string Country { get; set; }
-
-        public UpdateOrganisationCommand(string idCode, string organisationName, string? address, string country)
+        public UpdateOrganisationCommand(Guid id, string idCode, string organisationName)
         {
+            Id = id;
             IdCode = idCode;
             OrganisationName = organisationName;
-            Address = address;
-            Country = country;
         }
 
         public Domain.Entities.Organisation ToEntity()
         {
             return new Domain.Entities.Organisation()
             {
+                Id = Id,
                 IdCode = this.IdCode,
-                OrganisationName = this.OrganisationName,
-                Address = this.Address,
-                Country = this.Country
+                OrganisationName = this.OrganisationName
             };
         }
     }

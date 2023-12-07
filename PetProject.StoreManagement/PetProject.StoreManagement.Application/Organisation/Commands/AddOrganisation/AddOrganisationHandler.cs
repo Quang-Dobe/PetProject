@@ -8,7 +8,7 @@ using PetProject.StoreManagement.CrossCuttingConcerns.OS;
 
 namespace PetProject.StoreManagement.Application.Organisation.Commands.AddOrganisation
 {
-    public class UpdateOrganisationHandler : ICommandHandler<UpdateOrganisationCommand, bool>
+    public class AddOrganisationHandler : ICommandHandler<AddOrganisationCommand, bool>
     {
         private readonly IOrganisationRepository _organisationRepository;
 
@@ -16,15 +16,15 @@ namespace PetProject.StoreManagement.Application.Organisation.Commands.AddOrgani
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private readonly ILogger<UpdateOrganisationHandler> _logger;
+        private readonly ILogger<AddOrganisationHandler> _logger;
 
         private Stopwatch _stopwatch;
 
-        public UpdateOrganisationHandler(
+        public AddOrganisationHandler(
             IOrganisationRepository organisationRepository, 
             IDateTimeProvider dateTimeProvider, 
             IHttpContextAccessor httpContextAccessor, 
-            ILogger<UpdateOrganisationHandler> logger)
+            ILogger<AddOrganisationHandler> logger)
         {
             _organisationRepository = organisationRepository;
             _dateTimeProvider = dateTimeProvider;
@@ -32,7 +32,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Commands.AddOrgani
             _logger = logger;
         }
 
-        public async Task<bool> Handle(UpdateOrganisationCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AddOrganisationCommand request, CancellationToken cancellationToken)
         {
             _stopwatch = Stopwatch.StartNew();
             var ipAddress = GetIpAddress();
@@ -44,7 +44,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Commands.AddOrgani
                 if (organisation == null || (organisation.IdCode.IsNullOrEmpty() && organisation.OrganisationName.IsNullOrEmpty() && organisation.Country.IsNullOrEmpty()))
                 {
                     LogTrace("", "", ipAddress, $"[Organisation - AddOrganisationHandler] Invalid Organisation");
-                    return false;
+                    throw new HttpRequestException("Invalid Organisation");
                 }
 
                 await _organisationRepository.AddAsync(organisation);

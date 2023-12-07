@@ -17,7 +17,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Queries.GetOrganis
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private readonly ILogger<UpdateOrganisationHandler> _logger;
+        private readonly ILogger<GetOrganisationByIDHandler> _logger;
 
         private Stopwatch _stopwatch;
 
@@ -26,7 +26,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Queries.GetOrganis
             IDbConnectionClient connectionClient, 
             IDateTimeProvider dateTimeProvider,
             IHttpContextAccessor httpContextAccessor,
-            ILogger<UpdateOrganisationHandler> logger)
+            ILogger<GetOrganisationByIDHandler> logger)
         {
             _connectionClient = connectionClient;
             _dateTimeProvider = dateTimeProvider;

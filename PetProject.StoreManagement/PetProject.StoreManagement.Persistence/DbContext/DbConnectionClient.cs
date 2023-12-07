@@ -1,35 +1,37 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.EntityFrameworkCore;
 using PetProject.StoreManagement.Domain.ThirdPartyServices.DbConnectionClient;
+using PetProject.StoreManagement.Persistence.SqlServer.Extensions;
 using System.Data;
 
 namespace PetProject.StoreManagement.Persistence
 {
     public class DbConnectionClient : IDbConnectionClient, IDisposable
     {
-        private readonly string _connectionString;
-        private IDbConnection _connection;
+        private StoreManagementDbContext _context;
 
-        public DbConnectionClient(string connectionString)
+        public DbConnectionClient(StoreManagementDbContext context)
         {
-            _connectionString = connectionString;
+            _context = context;
         }
 
         public IDbConnection GetDbConnection()
         {
-            if (_connection == null || _connection.State != ConnectionState.Open)
+            var connection = _context.GetCurrentConnection();
+
+            if (connection == null)
             {
-                _connection = new SqlConnection(_connectionString);
-                _connection.Open();
+                _context.Database.OpenConnection();
+                return _context.Database.GetDbConnection();
             }
 
-            return _connection;
+            return connection;
         }
 
         public void Dispose()
         {
-            if (_connection != null && _connection.State == ConnectionState.Open)
+            if (_context != null)
             {
-                _connection.Dispose();
+                _context.Dispose();
             }
         }
     }

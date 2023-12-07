@@ -46,7 +46,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Commands.UpdateOrg
                 if (data == null || (data.IdCode.IsNullOrEmpty() && data.OrganisationName.IsNullOrEmpty() && data.Country.IsNullOrEmpty()))
                 {
                     LogTrace("", "", ipAddress, $"[Organisation - UpdateOrganisationHandler] Invalid Organisation");
-                    return null;
+                    throw new HttpRequestException("Invalid Organisation");
                 }
 
                 var entity = _organisationRepository.GetAll().Where(x => x.Id == data.Id || x.IdCode == data.IdCode).FirstOrDefault();
@@ -54,7 +54,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Commands.UpdateOrg
                 if (entity == null)
                 {
                     LogTrace("", "", ipAddress, $"[Organisation - UpdateOrganisationHandler] Not exist Organisation with Id ({data.Id})");
-                    return null;
+                    throw new HttpRequestException($"Not exist Organisation with Id ({data.Id})");
                 }
                 else
                 {

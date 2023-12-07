@@ -2,7 +2,7 @@
 
 namespace PetProject.StoreManagement.Application.Organisation.Commands.AddOrganisation
 {
-    public class UpdateOrganisationCommand : ICommand<bool>
+    public class AddOrganisationCommand : ICommand<bool>
     {
         public string IdCode { get; set; }
 
@@ -12,7 +12,7 @@ namespace PetProject.StoreManagement.Application.Organisation.Commands.AddOrgani
 
         public string Country { get; set; }
 
-        public UpdateOrganisationCommand(string idCode, string organisationName, string? address, string country)
+        public AddOrganisationCommand(string idCode, string organisationName, string? address, string country)
         {
             IdCode = idCode;
             OrganisationName = organisationName;
