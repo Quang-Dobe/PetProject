@@ -48,9 +48,9 @@ namespace PetProject.StoreManagement.Application.Organisation.Queries.GetAllOrga
                               "[Organisation].[IdCode], " +
                               "[Organisation].[OrganisationName], " +
                               "[User].[Id] AS [UserId], " +
-                              "[User].[Name] AS [UserName] " +
-                              "FROM dbo.Organisation AS [Organisation] " +
-                              "INNER JOIN dbo.User AS [User] ON [Organisation].Id = [User].OrganisationId";
+                              "[User].[UserName] AS [UserName] " +
+                              "FROM dbo.[Organisation] AS [Organisation] " +
+                              "INNER JOIN dbo.[User] AS [User] ON [Organisation].Id = [User].OrganisationId";
 
                     var resultQuery = await connection.QueryAsync(sql);
 

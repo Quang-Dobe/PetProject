@@ -10,7 +10,10 @@ IWebHostEnvironment environment = builder.Environment;
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(type => type.ToString());
+}); ;
 
 builder.Services.AddCrossCuttingConcerns();
 builder.Services.AddPersistence(configuration.GetConnectionString("StoreManagement"), "");
