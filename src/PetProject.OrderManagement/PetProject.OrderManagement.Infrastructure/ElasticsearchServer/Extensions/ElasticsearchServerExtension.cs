@@ -2,23 +2,25 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using PetProject.OrderManagement.Infrastructure.ElasticsearchServer.DefaultSetting;
+using PetProject.OrderManagement.CrossCuttingConcerns.SharedAppSetting;
+using PetProject.OrderManagement.Domain.Services.BaseService;
 
 namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.Extensions
 {
     public static class ElasticsearchServerExtension
     {
-        public static IServiceCollection AddElasticsearchServer(this IServiceCollection services)
+        public static IServiceCollection AddElasticsearchServer(this IServiceCollection services, string baseUrl, string userName, string password, string certificate, string defaultIndex)
         {
             var config = new ElasticSearchConfiguration();
 
-            var settings = new ConnectionSettings(new Uri(config.BaseUrl ?? ""))
-                .CertificateFingerprint(config.Certificate).BasicAuthentication(config.UserName, config.Password)
-                .EnableApiVersioningHeader().DefaultIndex(config.DefaultIndex);
+            var settings = new ConnectionSettings(new Uri(config.BaseUrl ?? baseUrl))
+                .CertificateFingerprint(config.Certificate ?? certificate).BasicAuthentication(config.UserName ?? userName, config.Password ?? password)
+                .EnableApiVersioningHeader().DefaultIndex(config.DefaultIndex ?? defaultIndex);
 
             AddDefaultMapping(settings);
             var client = new ElasticClient(settings);
             services.AddSingleton<IElasticClient>(client);
-            AddIndex(client, config.DefaultIndex);
+            AddIndex(client, config.DefaultIndex ?? defaultIndex);
 
             return services;
         }
@@ -37,7 +39,7 @@ namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.Extensio
                         if (defaultMappingMethod != null && defaultMappingMethod.ReturnType == typeof(void))
                         {
                             object[] parameters = { settings };
-                            defaultMappingMethod.Invoke(null, parameters);
+                            defaultMappingMethod.Invoke(Activator.CreateInstance(exportedType), parameters);
                         }
 
                     }
@@ -59,7 +61,7 @@ namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.Extensio
                         if (defaultIndexMethod != null && defaultIndexMethod.ReturnType == typeof(void))
                         {
                             object[] parameters = { client, indexName };
-                            defaultIndexMethod.Invoke(null, parameters);
+                            defaultIndexMethod.Invoke(Activator.CreateInstance(exportedType), parameters);
                         }
 
                     }

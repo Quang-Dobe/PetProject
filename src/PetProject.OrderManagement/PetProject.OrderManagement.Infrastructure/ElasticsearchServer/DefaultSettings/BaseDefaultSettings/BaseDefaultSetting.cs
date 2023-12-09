@@ -4,6 +4,9 @@ namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.DefaultS
 {
     public class BaseDefaultSetting : IBaseDefaultSetting
     {
+        public BaseDefaultSetting()
+        { }
+
         public virtual void SetDefaultMapping(ConnectionSettings settings)
         {
             settings.DefaultIndex("Id")

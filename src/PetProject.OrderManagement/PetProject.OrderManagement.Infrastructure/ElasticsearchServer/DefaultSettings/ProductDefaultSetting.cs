@@ -5,6 +5,9 @@ namespace PetProject.OrderManagement.Infrastructure.ElasticsearchServer.DefaultS
 {
     public class ProductDefaultSetting : BaseDefaultSetting
     {
+        public ProductDefaultSetting()
+        { }
+
         public override void SetDefaultMapping(ConnectionSettings settings)
         {
             base.SetDefaultMapping(settings);

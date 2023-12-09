@@ -34,7 +34,13 @@ namespace PetProject.OrderManagement.WorkerService.Extensions
 
             services.AddScoped<IElasticSearchServices, ElasticSearchServices>();
 
-            services.AddElasticsearchServer();
+            services.AddElasticsearchServer(
+                appSettings.ElasticSettings.BaseUrl, 
+                appSettings.ElasticSettings.UserName, 
+                appSettings.ElasticSettings.Password, 
+                appSettings.ElasticSettings.Certificate, 
+                appSettings.ElasticSettings.DefaultIndex
+            );
 
             services.AddHostedService<SyncDataToElasticSearchDbWorker>();
 
