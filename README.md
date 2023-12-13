@@ -4,7 +4,7 @@
 
 This is my PetProject - A pratical Project
 
-Tech stack: .NET 7 with Clean Architecture and CQRS, Modular Monolith, Domain-Driven Design, SOLID, Asp.Net Core, EF Core, Identity Custom Storage, Dapper, Mediator, Redis as Distributed memory
+Tech stack: .NET 7 with Clean Architecture and CQRS, Modular Monolith, Domain-Driven Design, SOLID, Asp.Net Core, EF Core, Identity Custom Storage, Dapper, Mediator, RabbitMQ, Redis as Distributed memory
 
 ## Clean Architecture
 ![projects_dependencies](docs/CleanArchitecture.jpg)
