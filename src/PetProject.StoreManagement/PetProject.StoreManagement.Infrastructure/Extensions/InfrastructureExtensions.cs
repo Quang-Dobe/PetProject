@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PetProject.StoreManagement.Domain.ThirdPartyServices.Caching;
+using PetProject.StoreManagement.Domain.ThirdPartyServices.MQBroker;
 using PetProject.StoreManagement.Infrastructure.CachingService;
+using PetProject.StoreManagement.Infrastructure.MQBroker;
 
 namespace PetProject.StoreManagement.Infrastructure.Extensions
 {
@@ -9,6 +11,7 @@ namespace PetProject.StoreManagement.Infrastructure.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, string cachingConnectionString)
         {
             services.AddCaching(cachingConnectionString);
+            services.AddMQBroker();
 
             return services;
         }
@@ -18,6 +21,13 @@ namespace PetProject.StoreManagement.Infrastructure.Extensions
             services.AddStackExchangeRedisCache(options => options.Configuration = cachingConnectionString);
 
             services.AddScoped<ICaching, Caching>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddMQBroker(this IServiceCollection services)
+        {
+            services.AddScoped<IMessageQueueBroker, MessageQueueBroker>();
 
             return services;
         }
