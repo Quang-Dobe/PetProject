@@ -49,8 +49,9 @@ namespace PetProject.OrderManagement.WorkerService.WorkerServices
                             .Where(myType => myType.IsClass && myType.GetInterfaces().Length > 1 && myType.GetInterface("IBaseRepository`1") != null))
                         {
                             var context = scope.ServiceProvider.GetService<OrderManagementDbContext>();
+                            var contextInstance = Activator.CreateInstance(type, new object[] { context, _dateTimeProvider, _externalRepoService });
                             var methodInfo_GetAll = type.GetMethod("GetAll");
-                            var resultData = methodInfo_GetAll?.Invoke(Activator.CreateInstance(type, new object[] { context, _dateTimeProvider, _externalRepoService }), null) as IQueryable<BaseEntity<Guid>>;
+                            var resultData = methodInfo_GetAll?.Invoke(contextInstance, null) as IQueryable<BaseEntity<Guid>>;
 
                             var unsentSyncData = resultData?.Where(x => !x.IsSync).ToList();
 
@@ -72,7 +73,7 @@ namespace PetProject.OrderManagement.WorkerService.WorkerServices
                             }
 
                             var methodInfo_SaveChanges = type.GetMethod("SaveChanges");
-                            methodInfo_SaveChanges.Invoke(Activator.CreateInstance(type, new object[] { context, _dateTimeProvider, _externalRepoService }), null);
+                            methodInfo_SaveChanges.Invoke(contextInstance, null);
                         }
 
                         await Task.Delay(5000, stoppingToken);
