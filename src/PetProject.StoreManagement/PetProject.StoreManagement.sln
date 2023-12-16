@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.33711.374
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.StoreManagement.Presentation", "PetProject.StoreManagement.Presentation\PetProject.StoreManagement.Presentation.csproj", "{67C902E3-6227-4F84-A4F0-4164264BF659}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.StoreManagement.Presentation", "PetProject.StoreManagement.Presentation\PetProject.StoreManagement.Presentation.csproj", "{67C902E3-6227-4F84-A4F0-4164264BF659}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.StoreManagement.Domain", "PetProject.StoreManagement.Domain\PetProject.StoreManagement.Domain.csproj", "{BF20AC38-94BD-4D70-B0A8-6AEC7C067EE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.StoreManagement.Domain", "PetProject.StoreManagement.Domain\PetProject.StoreManagement.Domain.csproj", "{BF20AC38-94BD-4D70-B0A8-6AEC7C067EE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.StoreManagement.Infrastructure", "PetProject.StoreManagement.Infrastructure\PetProject.StoreManagement.Infrastructure.csproj", "{8D52058F-CAB0-474A-85ED-A45424B95D11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.StoreManagement.Infrastructure", "PetProject.StoreManagement.Infrastructure\PetProject.StoreManagement.Infrastructure.csproj", "{8D52058F-CAB0-474A-85ED-A45424B95D11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.StoreManagement.Persistence", "PetProject.StoreManagement.Persistence\PetProject.StoreManagement.Persistence.csproj", "{C1258797-094D-4E53-86DE-5BD1A394734B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.StoreManagement.Persistence", "PetProject.StoreManagement.Persistence\PetProject.StoreManagement.Persistence.csproj", "{C1258797-094D-4E53-86DE-5BD1A394734B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.StoreManagement.Application", "PetProject.StoreManagement.Application\PetProject.StoreManagement.Application.csproj", "{4703B8C1-7425-4EBC-A3AF-0908EC7C1D2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.StoreManagement.Application", "PetProject.StoreManagement.Application\PetProject.StoreManagement.Application.csproj", "{4703B8C1-7425-4EBC-A3AF-0908EC7C1D2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.StoreManagement.CrossCuttingConcerns", "PetProject.StoreManagement.CrossCuttingConcerns\PetProject.StoreManagement.CrossCuttingConcerns.csproj", "{B4989A9F-9F99-4EE9-8E7A-0B692A02178E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.StoreManagement.CrossCuttingConcerns", "PetProject.StoreManagement.CrossCuttingConcerns\PetProject.StoreManagement.CrossCuttingConcerns.csproj", "{B4989A9F-9F99-4EE9-8E7A-0B692A02178E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.StoreManagement.WorkerService", "PetProject.StoreManagement.WorkerService\PetProject.StoreManagement.WorkerService.csproj", "{644837BF-73B1-4AAE-9A89-44C368E8D1D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{B4989A9F-9F99-4EE9-8E7A-0B692A02178E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4989A9F-9F99-4EE9-8E7A-0B692A02178E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4989A9F-9F99-4EE9-8E7A-0B692A02178E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{644837BF-73B1-4AAE-9A89-44C368E8D1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{644837BF-73B1-4AAE-9A89-44C368E8D1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{644837BF-73B1-4AAE-9A89-44C368E8D1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{644837BF-73B1-4AAE-9A89-44C368E8D1D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
