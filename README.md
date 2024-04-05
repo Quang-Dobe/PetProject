@@ -12,6 +12,12 @@ Tech stack: .NET 7 with Clean Architecture and CQRS, Modular Monolith, Domain-Dr
 ## CQRS
 ![projects_dependencies](docs/CQRS.jpg)
 
+## Todo
+
+Update usage of Redis, MessageBroker and ElasticSearch (Not completed at all)
+
+Add AzureAD B2C for API, practice some more with Azure like FunctionApp, BlobStorage, EventGrid and setup to connect to a VNet...
+
 ## References
 
  - [ Pratical - Clean Architecture ](https://github.com/phongnguyend/Practical.CleanArchitecture)
